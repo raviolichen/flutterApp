@@ -1,0 +1,31 @@
+[
+  {
+    "storeHtml": "<!DOCTYPE html><html><head><title></title></head><body><h1 style=\"text-align: center;\"><strong>BOMBOM瘋狂歡迎您</strong></h1><div style=\"text-align: center;\">&nbsp;</div><div style=\"text-align: center;\">★賣場商品均從【香港部門】空運發貨，買家下單後 賣場不會特地留言告知出貨，</div><div style=\"text-align: center;\">均直接安排當天出貨(每日1PM結單)，您只需坐在家裡，約7-10天就可以收到商品囉^^ ★</div><div style=\"text-align: center;\">&nbsp;</div><div style=\"text-align: center;\">秉持著《快時尚品牌》精神，並且商品與香港店鋪同步販售，數量均有限，</div><div style=\"text-align: center;\">售出速度實在太快，有時若下單後缺貨，賣場會於第一時間留言告知，還請見諒^^◎</div><div style=\"text-align: center;\">&nbsp;</div><h2 style=\"text-align: center;\"><strong>THX 非常感謝您</strong></h2><div style=\"text-align: center;\">&nbsp;</div><div style=\"text-align: center;\">&nbsp;</div><div style=\"text-align: center;\">BOMBOM在奇摩拍賣也有賣場、評價極佳，歡迎新.舊顧客於官網放心選購；)</div><div style=\"text-align: center;\">**提醒您: 僅在官網購物，成為會員，才有消費累積功能、享有折數優惠唷**</div></body></html>",
+    "StoreWeb": "https://www.chushang.gov.tw/",
+    "storeWebF":"https://www.facebook.com/JhuShan/",
+    "stroeMapLocation": "https://www.google.com/maps/place/%E5%8D%97%E6%8A%95%E7%B8%A3%E7%AB%B9%E5%B1%B1%E9%8E%AE%E5%85%AC%E6%89%80/@23.7578635,120.6695108,17z/data=!3m1!4b1!4m5!3m4!1s0x346ecdca1d92e19d:0x3f0ea47a5a34eabe!8m2!3d23.7578635!4d120.6716995",
+    "storeProductList": [
+      {
+        "pName": "美味的餅",
+        "pText": "一盒900",
+        "pImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcToEIoyunWZxZyKxHc4-IMeluNHj8RNROTYhQ&usqp=CAU"
+      },
+      {
+        "pName": "雨傘蘇果汁",
+        "pText": "一杯50",
+        "pImage": "https://s.zimedia.com.tw/s/3wcP1Q-1"
+      },
+      {
+        "pName": "氣炸鍋",
+        "pText": "特價$9999",
+        "pImage": "https://storage.googleapis.com/www-cw-com-tw/ckeditor/201912/ckeditor-5de7216e854b2.JPG"
+      },
+      {
+        "pName": "手錶",
+        "pText": "你買不起",
+        "pImage": "https://cdn03.pinkoi.com/pinkoi.magz/tvzvjB9F/14650149183643.jpg"
+      }
+    ],
+    "images": ["https://cdn03.pinkoi.com/pinkoi.magz/tvzvjB9F/14650149183643.jpg","https://cdn013.pinkoi.com/pinkoi.magz/tvzvjB9F/14650149183643.jpg","https://cdn503.pinkoi.com/pinkoi.magz/tvzvjB9F/14650149183643.jpg","https://cd6n03.pinkoi.com/pinkoi.magz/tvzvjB9F/14650149183643.jpg"]
+  }
+]

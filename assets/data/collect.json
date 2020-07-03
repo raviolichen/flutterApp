@@ -1,0 +1,74 @@
+[
+  {
+    "id": 12,
+    "title":"John Wesley",
+    "subtext":"",
+    "data" : "",
+    "photo": "https://fpscdn.yam.com/MjY2NzI2ODl3b3JsZA==/6a356404bfe44efe.jpg",
+    "url": ""
+  },
+  {
+    "id": 142,
+    "title":"Bill Gates",
+    "subtext":"",
+    "data" : "",
+    "photo": "https://stickershop.line-scdn.net/stickershop/v1/product/9044256/IOS/main_animation@2x.png",
+    "url": ""
+  },
+  {
+    "id": 152,
+    "title":"Tim Cook",
+    "subtext":"",
+    "data" : "",
+    "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS5zDQSTRebNyG8cwCGQhxbX--er6rItKurEA&usqp=CAU",
+    "url": ""
+  },
+  {
+    "id": 162,
+    "title":"Mark Zuckerberg",
+    "subtext":"",
+    "data" : "",
+    "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT2JXRskRNcyta5Mu8XByJ8w2LQzjzv0ufV7A&usqp=CAU",
+    "url": ""
+  },
+  {
+    "id": 182,
+    "title":"Sundar Pichai",
+    "subtext":"",
+    "data" : "",
+    "photo": "https://7.share.photo.xuite.net/londachen/17ab88c/19413053/1069627215_l.jpg",
+    "url": ""
+  },
+  {
+    "id": 192,
+    "title":"Jack Ma",
+    "subtext":"",
+    "data" : "",
+    "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ60lytaqWDELtjRImgI03WU6Llf-HMR4PWRQ&usqp=CAU",
+    "url": ""
+  },
+  {
+    "id": 183,
+    "title":"Jeff Bezos",
+    "subtext":"",
+    "data" : "",
+    "photo": "https://cdn2.ettoday.net/images/1382/d1382902.jpg",
+    "url": ""
+  },
+  {
+    "id": 1812,
+    "title":"Robert H. Swan",
+    "subtext":"",
+    "data" : "",
+    "photo": "https://cdn2.ettoday.net/images/413/413472.jpg",
+    "url": ""
+  },
+  {
+    "id": 822,
+    "title":"Ginni Rometty",
+    "subtext":"",
+    "data" : "",
+    "photo": "https://img.ruten.com.tw/s1/5/c3/ed/21648587166701_951.jpg",
+    "url": ""
+  }
+]

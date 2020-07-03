@@ -1,0 +1,33 @@
+[
+  {
+    "Banner": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRyN1iv_LDGwacOehj1yFvdmAOa1wrL4rH02Q&usqp=CAU",
+      "https://kinmen.travel/image/15851/1024x768",
+      "https://img95.699pic.com/photo/50046/5562.jpg_wh300.jpg",
+      "https://image.shutterstock.com/image-vector/abstract-lines-dots-connect-background-260nw-1492332182.jpg"
+    ],
+    "EventList": [
+      {
+        "EId": 5,
+        "url": "https://handheart.com.tw/wp-content/uploads/2018/08/170327-%E6%AD%8C%E5%94%B1%E6%AF%94%E8%B3%BD-02-e1546486281695.jpg",
+        "title": "中央研究院109年度藝文活動即日起開放投件申請",
+        "date": "2019-08-15",
+        "text": "演出場地為中央研究院學術活動中心1樓大禮堂，劇院型場地，可容納598人"
+      },
+      {
+        "EId": 7,
+        "url": "https://hahow.in/images/5c3b43dbf699690021a1363e",
+        "title": "2020探索台灣120h (寒)–永續好行",
+        "date": "2019-10-05",
+        "text": "活動以組隊方式進行五天性活動，期間將帶領同學前往數..."
+      },
+      {
+        "EId": 6,
+        "url": "https://www.ncyu.edu.tw/files/site_content/dfl/%E6%B5%B7%E5%A0%B11080215.jpg",
+        "title": "2019躍動金門「秋冬來金溫暖你心」抽獎活動",
+        "date": "2020-11-01",
+        "text": ""
+      }
+    ]
+  }
+]
