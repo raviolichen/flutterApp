@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
+
 import 'helps/helps.dart';
 import 'package:flutter/material.dart';
 
@@ -7,14 +9,12 @@ class c_Banner extends StatefulWidget {
   final double height;
   final ValueChanged<int> onTap;
   final Curve curve;
-
   c_Banner(
     this._images, {
     this.height = 250,
     this.onTap,
     this.curve = Curves.linear,
   }) : assert(_images != null);
-
   @override
   _c_BannerState createState() => _c_BannerState(height:height);
 }
@@ -22,19 +22,24 @@ class c_Banner extends StatefulWidget {
 class _c_BannerState extends State<c_Banner> {
   PageController _pageController;
   int _curIndex;
+  int ishook;
   final double height;
   //Timer _timer;
   _c_BannerState({this.height});
   @override
   void initState() {
     super.initState();
-    _curIndex = widget._images.length * 5;
+    _curIndex = widget._images.length*5;
+    ishook=widget._images.length;
     _pageController = PageController(initialPage: _curIndex);
     //_initTimer();
   }
 
   @override
   Widget build(BuildContext context) {
+    if(ishook!=widget._images.length) {
+      //0_changePageNoDelay();
+    }
     return
       Container(
         height: height,
@@ -63,7 +68,7 @@ class _c_BannerState extends State<c_Banner> {
                 child: Container(
                   width: 8,
                   height: 8,
-                  color: s == widget._images[_curIndex % length]
+                  color: s == widget._images[(_curIndex) % length]
                       ? ButtonColorNormal
                       : ButtonColor_UNSelect,
                 ),
@@ -101,8 +106,14 @@ class _c_BannerState extends State<c_Banner> {
                 ),
               );*/
             },
-            child: Image.network(widget._images[index % length],
-                fit: BoxFit.cover),
+            child:
+            CachedNetworkImage(
+              imageUrl: widget._images[index % length],
+              placeholder: (context, url) => Center( child: SizedBox(width:30,height:30,child:CircularProgressIndicator())),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+              fit: BoxFit.cover,
+            )
+
           );
         },
       ),
@@ -133,6 +144,9 @@ class _c_BannerState extends State<c_Banner> {
     }
   }*/
 
+  _changePageNoDelay() {
+      _pageController.jumpToPage(_curIndex);
+  }
   /// 切换页面，并刷新小圆点
   _changePage() {
     Timer(Duration(milliseconds: 350), () {

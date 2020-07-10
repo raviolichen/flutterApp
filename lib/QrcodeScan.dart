@@ -1,81 +1,83 @@
-
+import 'package:demoApp/main.dart';
 import 'package:flutter/material.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
-import 'helps/helps.dart';
-
+import 'package:flutter/services.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 class QrcodeScan extends StatefulWidget {
   @override
   _QrcodeScanState createState() => _QrcodeScanState();
 }
 
-class _QrcodeScanState extends State<QrcodeScan> {
-  TextEditingController _outputController;
+class _QrcodeScanState extends State<QrcodeScan> with TickerProviderStateMixin {
+  ScanResult scanResult;
+
+  final _flashOnController = TextEditingController(text: "開啟閃光燈");
+  final _flashOffController = TextEditingController(text: "關閉閃光燈");
+  final _cancelController = TextEditingController(text: "取消");
+  var _numberOfCameras = 0;
+  var _aspectTolerance = 0.00;
+  var _selectedCamera = -1;
+  var _useAutoFocus = true;
+  var _autoEnableFlash = false;
+
+  static final _possibleFormats = BarcodeFormat.values.toList()
+    ..removeWhere((e) => e == BarcodeFormat.unknown);
+
+  List<BarcodeFormat> selectedFormats = [..._possibleFormats];
 
   @override
-  void initState() {
+  // ignore: type_annotate_public_apis
+  initState() {
     super.initState();
-    this._outputController = new TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    Future.delayed(Duration.zero, () async {
+      _numberOfCameras = await BarcodeScanner.numberOfCameras;
+      if(_numberOfCameras>0)
+      setState(() {
+        scan();
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
-          TextField(
-            textAlign: TextAlign.center,
-            controller: _outputController,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
-            child: RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
-              ),
-              onPressed: () => _scan(),
-              padding: EdgeInsets.all(12),
-             // color: appGreyColor,
-              child: Text("show Web", style: TextStyle(color: Colors.white)),
-            ),
-          )
-        ],
-      ),
+      backgroundColor: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+      body: Container(),
+      resizeToAvoidBottomPadding: false,
     );
   }
-  Future<void> _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('AlertDialog Title'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('This is a demo alert dialog.'),
-                Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Approve'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-  Future _scan() async {
-    String barcode = await scanner.scan();
-    this._outputController.text = barcode;
+  Future scan() async {
+    try {
+      var options = ScanOptions(
+        strings: {
+          "cancel": _cancelController.text,
+          "flash_on": _flashOnController.text,
+          "flash_off": _flashOffController.text,
+        },
+        restrictFormat: selectedFormats,
+        useCamera: _selectedCamera,
+        autoEnableFlash: _autoEnableFlash,
+        android: AndroidOptions(
+          aspectTolerance: _aspectTolerance,
+          useAutoFocus: _useAutoFocus,
+        ),
+      );
+      var result = await BarcodeScanner.scan(options: options);
+      setState(() => {
+     // Navigator.pop(context,result)
+      });
+    } on PlatformException catch (e) {
+      var result = ScanResult(
+        type: ResultType.Error,
+        format: BarcodeFormat.unknown,
+      );
+      if (e.code == BarcodeScanner.cameraAccessDenied) {
+        setState(() {
+          result.rawContent = '無法取得相機權限';
+        });
+      } else {
+        result.rawContent = '不明錯誤: $e';
+      }
+
+    }
   }
 }

@@ -16,7 +16,7 @@ class EventItem {
   factory EventItem.fromJson(Map<String, dynamic> json){
     if(json!=null)
     return new EventItem(
-        eId: json['EId'],
+        eId: json['eId'],
         url: json['url'],
         title: json ['title'],
         date: json['date'],

@@ -14,6 +14,7 @@ class EventPage extends StatelessWidget {
   Widget _buildListItem(BuildContext buildContext, FeildItem feildItem) {
     TextEditingController textEditingController = new TextEditingController();
     text_list_control[feildItem.fname] = textEditingController;
+    textEditingController.text=feildItem.fvalue;
     return Padding(
         padding: EdgeInsets.all(15.0),
         child: TextFormField(
@@ -57,12 +58,12 @@ class EventPage extends StatelessWidget {
         child: Text(submitButtonText, style: TextStyle(color: Colors.white)),
       ),
     );
-
     List<Widget> FeildWidgetList = this
         .feildItemList
         .fitems
         .map<Widget>((data) => _buildListItem(context, data))
         .toList();
+
     FeildWidgetList.insert(
         0,
         Center(
@@ -74,6 +75,7 @@ class EventPage extends StatelessWidget {
           maxLines: 3,
           softWrap: true,
         )));
+
     FeildWidgetList.insert(
         1,
         Center(
@@ -87,6 +89,7 @@ class EventPage extends StatelessWidget {
           maxLines: 3,
           softWrap: true,
         ))));
+
     FeildWidgetList.add(submitButton);
     return Scaffold(
       appBar: new AppBar(
@@ -99,13 +102,12 @@ class EventPage extends StatelessWidget {
       ),
     );
   }
-
   void CompleteSubmit(BuildContext context){
     String data = "";
     feildItemList.fitems.forEach((fkey) => {
       data +=
-          "," + fkey.fname + ":" + text_list_control[fkey.fname].text
+           ",\""+fkey.fname + "\":\"" + text_list_control[fkey.fname].text+"\""
     });
-    Navigator.of(context).pop(data);
+    Navigator.of(context).pop("{"+data.substring(1)+"}");
   }
 }

@@ -1,3 +1,4 @@
+import 'package:demoApp/helps/GlobleValue.dart';
 import 'package:demoApp/modules/TypeItemList.dart';
 import 'package:flutter/material.dart';
 import 'package:demoApp/ListViewPage.dart';
@@ -43,7 +44,8 @@ class _TypePageState extends State<TypePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => new ListViewPage(Id:typeitem.TId,appTitle: typeitem.TName,RouterName: "storeList",detailType: DetailType.DetailListPage,)));
+                        builder: (context) => new ListViewPage(
+                            Id:typeitem.TId,appTitle: typeitem.TName,RouterName: GlobleValue.StoreListGetAPI,detailType: DetailType.DetailListPage,)));
               },
             ),
           ));

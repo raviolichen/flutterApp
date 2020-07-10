@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:demoApp/banner.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'CusListTile.dart';
+import 'helps/globlefun.dart';
 import 'modules/DetailListItem.dart';
 import 'modules/Record.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -53,6 +54,8 @@ class _DetailListPageState extends State<DetailListPage> {
       javascriptMode: JavascriptMode.unrestricted,
       //避免被導出特定的網址。
       navigationDelegate: (NavigationRequest request) {
+        if(!isLoad)
+          return NavigationDecision.navigate;
         return NavigationDecision.prevent;
 
       },
@@ -113,7 +116,7 @@ class _DetailListPageState extends State<DetailListPage> {
         ),
         body: Stack(children: <Widget>[
           Hero(
-            tag: "avatar_" + record.id.toString(),
+            tag: "avatar_" +record.title+ record.id.toString(),
             child: ListView.builder(
               itemCount: isLoad ? detailItem.products.length + 3 : 3,
               itemBuilder: (context, index) {
@@ -187,8 +190,8 @@ class _DetailListPageState extends State<DetailListPage> {
   }
 
   void _loaddetailjson() async {
-    detailItem = await DetailListService().loadDetail(5);
-    kNavigationExamplePage = detailItem.storeHtml;
+    detailItem = await DetailListService().loadDetail(record.id);
+    kNavigationExamplePage=htmlformat(detailItem.storeHtml);
     if (!isLoad) _createWebView();
   }
 }
@@ -205,7 +208,7 @@ class MyFAB extends StatelessWidget {
         height: 64,
         padding: EdgeInsets.only(left: 20),
         child: FloatingActionButton(
-          heroTag: url,
+          heroTag: null,
           onPressed: () {
             URLLauncher().launchURL(url);
           },

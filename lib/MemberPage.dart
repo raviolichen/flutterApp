@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:demoApp/ListViewPage.dart';
+import 'package:demoApp/helps/GlobleValue.dart';
 import 'package:flutter/material.dart';
 import 'CusListTile.dart';
+import 'LoginPage.dart';
 import 'helps/helps.dart';
 import 'modules/RecordList.dart';
 import 'modules/Record.dart';
@@ -8,9 +11,9 @@ import 'DataService.dart';
 
 class MemberPage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _MemberPageState();
+  State<StatefulWidget> createState() => MemberPageState();
 }
-class _MemberPageState extends State<MemberPage> {
+class MemberPageState extends State<MemberPage> {
   RecordList _records = new RecordList();
   @override
   Widget build(BuildContext context) {
@@ -44,18 +47,26 @@ class _MemberPageState extends State<MemberPage> {
             thumbnail: ClipOval(
                 child: Hero(
                     tag: record.id,
-                    child: Image.network(
-                      record.photo,
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ))),
+                    child:
+                    CachedNetworkImage(
+                        imageUrl: record.photo,
+                        width: 100,
+                        height: 100,
+                        placeholder: (context, url) => Center( child: SizedBox(width:30,height:30,child:CircularProgressIndicator())),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        fit: BoxFit.cover))),
           ),
         ),
       );
     }
 
     Widget _buildList(BuildContext context) {
+      String _goldnum=GlobleValue.Golds==null?"0":GlobleValue.Golds;
+      String _userId=GlobleValue.userId.toString().padLeft(10, '0');
+
+
+
+
       List<Widget> recordlist = this
           ._records
           .records
@@ -74,34 +85,48 @@ class _MemberPageState extends State<MemberPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Container(
+                Expanded(
+                    flex: 1,
+                child: Container(
                         height: 150,
+                        width: 150,
                         padding: EdgeInsets.all(8),
                         child: ClipOval(
-                            child: Image.network(
-                                "https://s.yimg.com/zp/images/59ACE79113CE7CD01D456193B59551BD27DCE048")),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("User Name"),
-                          const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 2.0)),
-                          Text("123456789"),
-                          const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 1.0)),
-                          Text("金幣數量:372"),
-                          const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 1.0)),
-                        ],
-                      ),
+                            child: Container(
+                              color: Colors.white,
+                                child: Icon(Icons.perm_contact_calendar
+                                    ,color: Colors.amber,
+                                size: 120.0,
+                                semanticLabel: 'Text to announce in accessibility modes'))
+                            ),
+                      )),
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 10,right: 10),
+                        child:
+                          RichText(
+                            text: TextSpan(
+                              text: GlobleValue.userName+"\n",
+                              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 32),
+                              children: <TextSpan>[
+                                TextSpan(text: _userId+"\n", style: TextStyle(fontWeight: FontWeight.normal,fontSize: 16)),
+                                TextSpan(text: "金幣數量:"+_goldnum ,style: TextStyle(fontWeight: FontWeight.normal,fontSize: 16)),
+                              ],
+                            ),
+                          ),
+                      )),
                     ]),
               ),
               Container(
                 height: 50,
                 padding: EdgeInsets.only(top: 20),
-                child: Text("活動歷程"),
+                child: RichText(
+                  text: TextSpan(
+                    text: "活動歷程",
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.black54),
+                  ),
+                ),
               )
             ]);
           }
@@ -112,7 +137,7 @@ class _MemberPageState extends State<MemberPage> {
         },
       );
     }
-    return Scaffold(
+    return GlobleValue.userId==null? LoginPage(this):Scaffold(
       appBar: new AppBar(
         title: new Text(memberappTitle),
         backgroundColor: ButtonColorSubmit,
@@ -129,13 +154,13 @@ class _MemberPageState extends State<MemberPage> {
     _getRecords();
   }
   void _getRecords() async {
-    _records = await RecordService().loadRecords("123456", "history");
+    _records = await RecordService().loadRecords(GlobleValue.userId.toString(),GlobleValue.UserSlvGetAPI);
     setState(() {});
   }
   void NavigatorPage(BuildContext context,Record record){
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => new ListViewPage(RouterName: "collect",appTitle: record.title,Id:record.id.toString(),detailType: DetailType.DetailPage,)));
+            builder: (context) => new ListViewPage(RouterName: GlobleValue.OwnerSlvGetAPI,appTitle: record.title,Id:record.id.toString(),detailType: DetailType.DetailPage,)));
   }
 }

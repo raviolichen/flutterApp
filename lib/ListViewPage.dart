@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:demoApp/DetailEventPage.dart';
 import 'package:flutter/material.dart';
 import 'CusListTile.dart';
@@ -20,7 +21,6 @@ class ListViewPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ListViewPageState(Id,appTitle, RouterName,detailType);
 }
-
 class _ListViewPageState extends State<ListViewPage> {
   String RouterName;
   String Id;
@@ -37,8 +37,8 @@ class _ListViewPageState extends State<ListViewPage> {
     this.detailType=detailType;
     this.RouterName = RouterName;
     this.appTitle=appTitle;
+    this.Id=Id;
     _appBarTitle = new Text(appTitle);
-    this.Id = this.Id;
     _filter.addListener(() {
       if (_filter.text.isEmpty) {
         setState(() {
@@ -98,13 +98,17 @@ class _ListViewPageState extends State<ListViewPage> {
             )),
             thumbnail: ClipOval(
                 child: Hero(
-                    tag: "avatar_" + record.id.toString(),
-                    child: Image.network(
-                      record.photo,
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ))),
+                    tag: "avatar_" +record.title +record.id,
+                    child:
+                    CachedNetworkImage(
+                        imageUrl: record.photo,
+                        height: 100,
+                        width: 100,
+                        placeholder: (context, url) => Center( child: SizedBox(width:30,height:30,child:CircularProgressIndicator())),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        fit: BoxFit.cover)
+
+                )),
           ),
         ),
       );
