@@ -1,8 +1,8 @@
+import 'helps/globlefun.dart';
 import 'modules/DetailItem.dart';
 import 'modules/DetailListItem.dart';
 import 'modules/HomePageJson.dart';
 import 'modules/RecordList.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'modules/FeildItemList.dart';
@@ -10,9 +10,8 @@ import 'modules/TypeItemList.dart';
 import 'modules/detailEventitem.dart';
 import 'helps/GlobleValue.dart';
 import 'dart:convert' show  base64,utf8;
-import 'package:encrypt/encrypt.dart';
 
-class RecordService {
+class RecordDataService {
   Future<String> _loadRecordsAsset(String Id, String RouterName) async {
     return await _Get(RouterName+"?Id="+Id);
   }
@@ -24,7 +23,7 @@ class RecordService {
     return records;
   }
 }
-class UserService{
+class UserDataService{
   Future<Map<String, dynamic>> getUserId(String deviceId) async {
     String connectString = GlobleValue.UserGetIdAPI+"?deviceId="+deviceId;
     http.Response response = await http.get(connectString);
@@ -46,15 +45,16 @@ class UserService{
       return null;
   }
 }
-class QRcodeService{
+class QRcodeDataService{
   Future< Map<String, dynamic> > postQrcodeValue(int userId, String token, String data)async  {
+    //check userId
+    if(userId==null||token==null){
+      return json.decode("{\"result\":\"您尚未登入帳號，請確認網路狀態，或至會員頁面進行登入\"}");
+    }
     String connectString = GlobleValue.QRcodePostAPI;
-    String Akey=token.substring(0,32);
-    String iv=token.substring(32,48);
-    final encrypter = Encrypter(AES( Key.fromUtf8(Akey),mode:AESMode.cbc,padding: 'PKCS7'));
     Map postdata = {
       "userId":userId,
-      "data":encrypter.encrypt(data, iv: IV.fromUtf8(iv)).base64,
+      "data":encydata(token,data),
       "time":DateTime.now().toString()
     };
     http.Response response = await http.post(connectString,
@@ -66,7 +66,7 @@ class QRcodeService{
       return null;
   }
 }
-class FeildItemService {
+class FeildItemDataService {
   Future<String> postEeildValue(int eId,String userId, String token, String data) async {
     String connectString = GlobleValue.EventitemSignPostAPI;
     Map postdata = {
@@ -93,7 +93,7 @@ class FeildItemService {
     return feildItems;
   }
 }
-class DetailEventService {
+class DetailEventDataService {
   Future<String> _loadDetailAsset(int eId,int userId) async {
     return await _Get(   GlobleValue.EventitemAPI + '?eId=' + eId.toString() + '&userId='+userId.toString());
   }
@@ -105,7 +105,7 @@ class DetailEventService {
     return detailItem;
   }
 }
-class DetailService {
+class DetailDataService {
   Future<String> _loadDetailAsset(String Id) async {
     return await _Get( GlobleValue.SlvDetailGetAPI + '?Id=' + Id);
   }
@@ -117,16 +117,9 @@ class DetailService {
     return detailItem;
   }
 }
-class HomePageJsonService {
+class HomePageJsonDataService {
   Future<String> _loadDetailAsset() async {
     return await _Get(GlobleValue.HomePageJsonAPI);
-    String connectString = GlobleValue.HomePageJsonAPI;
-    http.Response response = await http.get(connectString);
-    if (response.statusCode == 200) {
-      return response.body;
-    } else
-      return "";
-    return await rootBundle.loadString('assets/data/HomePage.json');
   }
 
   Future<HomePageData> loadDetail() async {
@@ -136,7 +129,7 @@ class HomePageJsonService {
     return homePageData;
   }
 }
-class TypePageService {
+class TypePageDataService {
   Future<String> _loadDetailAsset() async {
     return await _Get(GlobleValue.StoreTypeGetAPI);
   }
@@ -148,7 +141,7 @@ class TypePageService {
     return typeItemList;
   }
 }
-class DetailListService {
+class DetailListDataService {
   Future<String> _loadDetailAsset(String Id) async {
     return await _Get(GlobleValue.StoreDetailGetAPI+"?Id="+Id);
   }

@@ -8,6 +8,7 @@ class GlobleValue extends InheritedWidget {
   static String Golds;
 
   static const ServerIp = "http://192.168.5.26:8081/api/";
+  //static const ServerIp = "http://192.168.0.100:50780/api/";
 
 //api Action
   static const HomePageJsonAPI = ServerIp + "_HomePage/GetHomePageJson";

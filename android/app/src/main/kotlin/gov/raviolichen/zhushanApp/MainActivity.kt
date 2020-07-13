@@ -1,4 +1,4 @@
-package com.raviolichen.flutter_app
+package gov.raviolichen.zhushanApp
 
 import io.flutter.embedding.android.FlutterActivity
 

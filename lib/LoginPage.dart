@@ -1,4 +1,4 @@
-import 'package:demoApp/helps/GlobleValue.dart';
+import 'helps/GlobleValue.dart';
 import 'package:flutter/material.dart';
 import 'DataService.dart';
 import 'MemberPage.dart';
@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage>{
               data+="\""+i+"\":\""+text_list_control[i].text+"\",";
           });
           data+="\"deviceId\":\""+GlobleValue.deviceId+"\"";
-          var result=await UserService().postUser("{"+data+"}");
+          var result=await UserDataService().postUser("{"+data+"}");
           if(result["userId"].toString().compareTo("0")!=0){
             parent.setState(() {
               GlobleValue.userId = int.parse(result["userId"]);

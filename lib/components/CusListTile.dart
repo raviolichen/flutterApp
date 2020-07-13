@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'banner.dart';
-import 'helps/helps.dart';
+import '../helps/helps.dart';
 
 class CusListTile extends StatelessWidget {
   const CusListTile({
@@ -92,18 +92,17 @@ class CusListTile_ImageFirst extends StatelessWidget {
         onTap: onTap,
         child: Column(
           children: <Widget>[
-            Row(children: <Widget>[
+            Container(
+                child:Row(children: <Widget>[
               Padding(
                 padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
                 child: title,
               ),
               Icon(Icons.keyboard_arrow_right,
                   color: ButtonColorSubmit, size: 30.0),
-            ]),
+            ])),
             Container(
-              child: Flexible(
                 child:Padding(child: c_Banner(thumbnail) ,padding: EdgeInsets.fromLTRB(16, 8, 16, 8),),
-              ),
               height: 180,
             )
           ],

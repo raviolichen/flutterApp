@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:demoApp/DetailEventPage.dart';
+import 'DetailEventPage.dart';
 import 'package:flutter/material.dart';
-import 'CusListTile.dart';
+import 'components/CusListTile.dart';
 import 'DetailListPage.dart';
 import 'DetailPage.dart';
 import 'helps/helps.dart';
@@ -90,23 +90,24 @@ class _ListViewPageState extends State<ListViewPage> {
             },
             title: Text(record.title,
                 style: TextStyle(
-                    color: Colors.black54, fontWeight: FontWeight.bold)),
+                    color: Colors.black54, fontWeight: FontWeight.bold,fontSize: 20)),
             subtitle: RichText(
                 text: TextSpan(
               text: record.subtext,
-              style: TextStyle(color: Colors.black38),
+              style: TextStyle(color: Colors.black38,fontSize: 14),
             )),
             thumbnail: ClipOval(
                 child: Hero(
                     tag: "avatar_" +record.title +record.id,
-                    child:
-                    CachedNetworkImage(
+                    child:AspectRatio (
+                      aspectRatio: 1.2,
+                        child:CachedNetworkImage(
                         imageUrl: record.photo,
                         height: 100,
                         width: 100,
                         placeholder: (context, url) => Center( child: SizedBox(width:30,height:30,child:CircularProgressIndicator())),
                         errorWidget: (context, url, error) => Icon(Icons.error),
-                        fit: BoxFit.cover)
+                        fit: BoxFit.cover))
 
                 )),
           ),
@@ -153,7 +154,7 @@ class _ListViewPageState extends State<ListViewPage> {
     _getRecords();
   }
   void _getRecords() async {
-    RecordList records = await RecordService().loadRecords(Id, RouterName);
+    RecordList records = await RecordDataService().loadRecords(Id, RouterName);
     setState(() {
       for (Record record in records.records) {
         this._records.records.add(record);
@@ -194,7 +195,7 @@ class _ListViewPageState extends State<ListViewPage> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-              new DetailEventPage()));
+              new DetailEventPagefix()));
     }
     else if(detailType==DetailType.DetailListPage){
       Navigator.push(

@@ -16,7 +16,8 @@ const memberappTitle = "會員";
 const pinCodeHintText = "Pin Code";
 const showListViewButtonText = "show ListView";
 const qrcodeButtonText="QR Code";
-const submitButtonText="submit";
+const submitButtonText="送出";
+const cancelSubmitText="取消報名";
 
 // Images
 NetworkImage appLogo =NetworkImage('https://www.google.com/logos/doodles/2020/dragon-boat-festival-2020-taiwan-6753651837108433-s.png');

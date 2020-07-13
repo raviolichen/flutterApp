@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:demoApp/helps/GlobleValue.dart';
+import 'helps/GlobleValue.dart';
 import 'package:flutter/material.dart';
-import 'package:demoApp/banner.dart';
+import 'components/banner.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'helps/globlefun.dart';
 import 'modules/DetailItem.dart';
@@ -136,7 +136,7 @@ class _DetailPageStatefulState extends State<DetailPage> {
   }
 
   void _loaddetailjson() async {
-    detailItem = await DetailService().loadDetail(record.id);
+    detailItem = await DetailDataService().loadDetail(record.id);
    if(!isLoad)
     kNavigationExamplePage=htmlformat(detailItem.html);
    _createWebView();

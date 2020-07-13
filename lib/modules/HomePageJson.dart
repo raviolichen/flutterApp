@@ -1,4 +1,4 @@
-import 'package:demoApp/modules/EventItem.dart';
+import 'package:zhushanApp/modules/EventItem.dart';
 class HomePageData{
   List<String> banner;
  List<EventItem> eventList= new List<EventItem>();

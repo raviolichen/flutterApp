@@ -1,6 +1,6 @@
-# flutter_app
+# flutterapp
 
-Zhushan App
+A new Flutter application.
 
 ## Getting Started
 

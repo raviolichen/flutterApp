@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:demoApp/ListViewPage.dart';
-import 'package:demoApp/helps/GlobleValue.dart';
+import 'ListViewPage.dart';
+import 'helps/GlobleValue.dart';
 import 'package:flutter/material.dart';
-import 'CusListTile.dart';
+import 'components/CusListTile.dart';
 import 'LoginPage.dart';
+import 'helps/globlefun.dart';
 import 'helps/helps.dart';
 import 'modules/RecordList.dart';
 import 'modules/Record.dart';
@@ -32,11 +33,11 @@ class MemberPageState extends State<MemberPage> {
             },
             title: Text(record.title,
                 style: TextStyle(
-                    color: Colors.black54, fontWeight: FontWeight.bold)),
+                    color: Colors.black54, fontWeight: FontWeight.bold,fontSize: 24)),
             subtitle: RichText(
               text: TextSpan(
                 text: record.subtext,
-                style: TextStyle(color: Colors.black38),
+                style: TextStyle(color: Colors.black38,fontSize: 16),
                 children: <TextSpan>[
                   TextSpan(text: "\n"),
                   TextSpan(text: record.data),
@@ -48,13 +49,16 @@ class MemberPageState extends State<MemberPage> {
                 child: Hero(
                     tag: record.id,
                     child:
+                    AspectRatio(
+                      aspectRatio: 1,
+                        child:
                     CachedNetworkImage(
                         imageUrl: record.photo,
                         width: 100,
                         height: 100,
                         placeholder: (context, url) => Center( child: SizedBox(width:30,height:30,child:CircularProgressIndicator())),
                         errorWidget: (context, url, error) => Icon(Icons.error),
-                        fit: BoxFit.cover))),
+                        fit: BoxFit.cover)))),
           ),
         ),
       );
@@ -63,10 +67,6 @@ class MemberPageState extends State<MemberPage> {
     Widget _buildList(BuildContext context) {
       String _goldnum=GlobleValue.Golds==null?"0":GlobleValue.Golds;
       String _userId=GlobleValue.userId.toString().padLeft(10, '0');
-
-
-
-
       List<Widget> recordlist = this
           ._records
           .records
@@ -87,19 +87,25 @@ class MemberPageState extends State<MemberPage> {
                     children: <Widget>[
                 Expanded(
                     flex: 1,
-                child: Container(
+                child: Align(
+                    alignment:Alignment.center,
+                    child:Container(
                         height: 150,
                         width: 150,
                         padding: EdgeInsets.all(8),
-                        child: ClipOval(
+                        child:
+                        AspectRatio (
+                          aspectRatio: 1,
+                          child:
+                          ClipOval(
                             child: Container(
                               color: Colors.white,
                                 child: Icon(Icons.perm_contact_calendar
                                     ,color: Colors.amber,
                                 size: 120.0,
                                 semanticLabel: 'Text to announce in accessibility modes'))
-                            ),
-                      )),
+                            )),
+                      ))),
                 Expanded(
                     flex: 1,
                     child: Container(
@@ -137,6 +143,7 @@ class MemberPageState extends State<MemberPage> {
         },
       );
     }
+
     return GlobleValue.userId==null? LoginPage(this):Scaffold(
       appBar: new AppBar(
         title: new Text(memberappTitle),
@@ -154,7 +161,8 @@ class MemberPageState extends State<MemberPage> {
     _getRecords();
   }
   void _getRecords() async {
-    _records = await RecordService().loadRecords(GlobleValue.userId.toString(),GlobleValue.UserSlvGetAPI);
+    await getId(context);
+    _records = await RecordDataService().loadRecords(GlobleValue.userId.toString(),GlobleValue.UserSlvGetAPI);
     setState(() {});
   }
   void NavigatorPage(BuildContext context,Record record){
@@ -163,4 +171,5 @@ class MemberPageState extends State<MemberPage> {
         MaterialPageRoute(
             builder: (context) => new ListViewPage(RouterName: GlobleValue.OwnerSlvGetAPI,appTitle: record.title,Id:record.id.toString(),detailType: DetailType.DetailPage,)));
   }
+
 }

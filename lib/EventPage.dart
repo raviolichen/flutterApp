@@ -7,9 +7,10 @@ class EventPage extends StatelessWidget {
   final title;
   final subtitle;
   final AppbarText;
+  final ButtonText;
   Map<String, TextEditingController> text_list_control = Map();
 
-  EventPage({this.AppbarText, this.title, this.subtitle, this.feildItemList});
+  EventPage({this.AppbarText,this.ButtonText ,this.title, this.subtitle, this.feildItemList});
 
   Widget _buildListItem(BuildContext buildContext, FeildItem feildItem) {
     TextEditingController textEditingController = new TextEditingController();
@@ -58,6 +59,22 @@ class EventPage extends StatelessWidget {
         child: Text(submitButtonText, style: TextStyle(color: Colors.white)),
       ),
     );
+    final cancelSubmit = Padding(
+      padding: EdgeInsets.all(15.0),
+      child: RaisedButton(
+        color: ButtonColorNormal,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
+        ),
+        onPressed: () {
+          CancelSubmiting(context);
+        },
+        padding: EdgeInsets.all(12),
+        //  color: appGreyColor,
+        child: Text(cancelSubmitText, style: TextStyle(color: Colors.white)),
+      ),
+    );
+
     List<Widget> FeildWidgetList = this
         .feildItemList
         .fitems
@@ -91,6 +108,9 @@ class EventPage extends StatelessWidget {
         ))));
 
     FeildWidgetList.add(submitButton);
+
+    if(ButtonText.toString().compareTo("編輯報名")==0)
+      FeildWidgetList.add(cancelSubmit);
     return Scaffold(
       appBar: new AppBar(
           title: new Text(AppbarText), backgroundColor: ButtonColorSubmit),
@@ -101,6 +121,10 @@ class EventPage extends StatelessWidget {
             children: FeildWidgetList),
       ),
     );
+  }
+  void CancelSubmiting(BuildContext context){
+    String data="{\"cancel\":\"true\"}";
+    Navigator.of(context).pop(data);
   }
   void CompleteSubmit(BuildContext context){
     String data = "";

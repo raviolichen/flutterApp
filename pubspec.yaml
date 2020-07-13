@@ -1,5 +1,5 @@
-name: demoApp
-description: A new Flutter application.
+name: zhushanApp
+description: 這是展示用的APP.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -27,13 +27,14 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  url_launcher: ^4.0.3
+  url_launcher: ^5.4.1
   webview_flutter: ^0.3.22
+  #qrscan: ^0.2.17
+  device_info: ^0.4.0+4
+  encrypt: ^4.0.2
+  http: any
+  barcode_scan: any
   cached_network_image: 2.2.0+1
-  barcode_scan: 3.0.1
-  encrypt: 4.0.2
-  device_info: 0.4.2+4
-
 
 dev_dependencies:
   flutter_test:

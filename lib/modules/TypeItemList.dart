@@ -1,5 +1,5 @@
 
-import 'package:demoApp/modules/TypeItem.dart';
+import 'package:zhushanApp/modules/TypeItem.dart';
 
 class TypeItemList{
   List<TypeItem> typeItemList= new List<TypeItem>();

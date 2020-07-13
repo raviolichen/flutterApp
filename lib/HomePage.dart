@@ -1,16 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:demoApp/modules/EventItem.dart';
-//import 'package:qrscan/qrscan.dart' as scanner;
+import 'modules/EventItem.dart';
 import 'package:flutter/material.dart';
-import 'CusListTile.dart';
-import 'helps/GlobleValue.dart';
+import 'components/CusListTile.dart';
 import 'helps/helps.dart';
 import 'modules/HomePageJson.dart';
-import 'modules/RecordList.dart';
-import 'modules/Record.dart';
 import 'DataService.dart';
 import 'DetailEventPage.dart';
-import 'banner.dart';
+import 'components/banner.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -39,23 +35,26 @@ class _HomePageState extends State<HomePage> {
             },
             title: Text(record.title,
                 style: TextStyle(
-                    color: Colors.black54, fontWeight: FontWeight.bold)),
+                    color: Colors.black54, fontWeight: FontWeight.bold,fontSize: 22)),
             subtitle: RichText(
                 text: TextSpan(
               text: record.date,
-              style: TextStyle(color: Colors.black38),
+              style: TextStyle(color: Colors.black38,fontSize: 16),
             )),
             thumbnail: ClipOval(
                 child: Hero(
                     tag: "avatar_" + record.eId.toString(),
-                    child: CachedNetworkImage(
+                  child:
+                  AspectRatio (
+                    aspectRatio: 1.1,
+                  child: CachedNetworkImage(
                           width: 100,
                           height: 100,
                           imageUrl: record.url,
                           placeholder: (context, url) =>Center( child: SizedBox(width:30,height:30,child:CircularProgressIndicator())),
                           errorWidget: (context, url, error) => Icon(Icons.error),
                           fit: BoxFit.cover,
-                        ),
+                        ),)
                 )),
           ),
         ),
@@ -107,7 +106,7 @@ class _HomePageState extends State<HomePage> {
   void _getRecords() async {
     if (!isGetting) {
       isGetting=true;
-      _datas = await HomePageJsonService().loadDetail();
+      _datas = await HomePageJsonDataService().loadDetail();
     }
     setState(() {
       _imgData = _datas.banner;
@@ -118,7 +117,7 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => new DetailEventPage(
+            builder: (context) => new DetailEventPagefix(
                   eventItem: record,
                 )));
   }

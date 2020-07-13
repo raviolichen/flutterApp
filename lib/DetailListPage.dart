@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:demoApp/banner.dart';
+import 'components/banner.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'CusListTile.dart';
+import 'components/CusListTile.dart';
 import 'helps/globlefun.dart';
 import 'modules/DetailListItem.dart';
 import 'modules/Record.dart';
@@ -90,20 +90,24 @@ class _DetailListPageState extends State<DetailListPage> {
     return CusListTile(
       cIcon:Icon(Icons.verified_user,size: 0,) ,
       title: Text(s.pName,
-          style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold)),
+          style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold,fontSize: 20)),
       subtitle: RichText(
           text: TextSpan(
         text: s.pText,
-        style: TextStyle(color: Colors.black38),
+        style: TextStyle(color: Colors.black38,fontSize: 16),
       )),
-      thumbnail: ClipOval(
-          child: Image.network(
-        s.pImage,
-        width: 100,
-        height: 100,
-        fit: BoxFit.cover,
+      thumbnail:
+      AspectRatio(
+        aspectRatio: 1,
+        child:
+        ClipOval(
+          child: CachedNetworkImage(
+            imageUrl: s.pImage,
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
       )),
-    );
+    ));
   }
 
   @override
@@ -143,7 +147,7 @@ class _DetailListPageState extends State<DetailListPage> {
                                           text: record.title + "\n",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 20)),
+                                              fontSize: 24)),
                                       TextSpan(
                                           text: record.subtext + "\n",
                                           style: TextStyle(
@@ -159,7 +163,7 @@ class _DetailListPageState extends State<DetailListPage> {
                         child: _webview,
                       ),
                       ActiveButton,
-                      isLoad ? Text("產品列表") : Container()
+                      isLoad ? RichText( text:TextSpan( text:"產品列表", style: TextStyle(fontSize: 20,color: Colors.black54))) : Container()
                     ]),
                   );
                 } else if (!isLoad || index == detailItem.products.length + 2) {
@@ -190,7 +194,7 @@ class _DetailListPageState extends State<DetailListPage> {
   }
 
   void _loaddetailjson() async {
-    detailItem = await DetailListService().loadDetail(record.id);
+    detailItem = await DetailListDataService().loadDetail(record.id);
     kNavigationExamplePage=htmlformat(detailItem.storeHtml);
     if (!isLoad) _createWebView();
   }
