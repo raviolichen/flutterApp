@@ -144,7 +144,17 @@ class MemberPageState extends State<MemberPage> {
       );
     }
 
-    return GlobleValue.userId==null? LoginPage(this):Scaffold(
+    return
+      AnimatedSwitcher(
+        duration: Duration(milliseconds: 350),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          var tween=Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0));
+          return MySlideTransition(
+            child: child,
+            position: tween.animate(animation),
+          );
+        },child:
+    GlobleValue.userId==null? LoginPage(this):Scaffold(
       appBar: new AppBar(
         title: new Text(memberappTitle),
         backgroundColor: ButtonColorSubmit,
@@ -152,13 +162,18 @@ class MemberPageState extends State<MemberPage> {
       backgroundColor: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
       body: _buildList(context),
       resizeToAvoidBottomPadding: false,
-    );
+    ));
   }
   @override
   void initState() {
     super.initState();
     _records.records = new List();
     _getRecords();
+
+
+
+
+
   }
   void _getRecords() async {
     await getId(context);
@@ -169,7 +184,37 @@ class MemberPageState extends State<MemberPage> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => new ListViewPage(RouterName: GlobleValue.OwnerSlvGetAPI,appTitle: record.title,Id:record.id.toString(),detailType: DetailType.DetailPage,)));
+            builder: (context) => new ListViewPage(RouterName: GlobleValue.OwnerSlvGetAPI,appTitle: record.title,Id:record.id+"&userId="+GlobleValue.userId.toString().toString(),detailType: DetailType.DetailPage,)));
   }
 
+}
+
+
+class MySlideTransition extends AnimatedWidget {
+  MySlideTransition({
+    Key key,
+    @required Animation<Offset> position,
+    this.transformHitTests = true,
+    this.child,
+  })
+      : assert(position != null),
+        super(key: key, listenable: position) ;
+
+  Animation<Offset> get position => listenable;
+  final bool transformHitTests;
+  final Widget child;
+  bool isRighttoLeft;
+  @override
+  Widget build(BuildContext context) {
+    Offset offset=position.value;
+    //动画反向执行时，调整x偏移，实现“从左边滑出隐藏”
+    if (position.status == AnimationStatus.reverse) {
+      offset = Offset(-offset.dx, offset.dy);
+    }
+    return FractionalTranslation(
+      translation: offset,
+      transformHitTests: transformHitTests,
+      child: child,
+    );
+  }
 }

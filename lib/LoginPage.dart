@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:zhushanApp/helps/globlefun.dart';
+
 import 'helps/GlobleValue.dart';
 import 'package:flutter/material.dart';
 import 'DataService.dart';
@@ -57,11 +61,15 @@ class _LoginPageState extends State<LoginPage>{
         ),
         onPressed: () async {
           String data="";
+          showLoading(context);
           text_list_control.keys.forEach((i) {
               data+="\""+i+"\":\""+text_list_control[i].text+"\",";
           });
           data+="\"deviceId\":\""+GlobleValue.deviceId+"\"";
-          var result=await UserDataService().postUser("{"+data+"}");
+         var result=await UserDataService().postUser("{"+data+"}");
+          if(isDiaglogShowing) {
+            Navigator.pop(context);
+          }
           if(result["userId"].toString().compareTo("0")!=0){
             parent.setState(() {
               GlobleValue.userId = int.parse(result["userId"]);

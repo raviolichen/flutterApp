@@ -37,6 +37,7 @@ class ViewTemplate extends StatefulWidget {
 }
 class ViewTemplateStates extends State<ViewTemplate> {
   int _selectedIndex = 0;
+  int _prevselectedIndex = 0;
   Lock lock;
   QRcodeHelper _qRcodeHelper;
   static List<Widget> _widgetOptions = <Widget>[
@@ -52,6 +53,7 @@ class ViewTemplateStates extends State<ViewTemplate> {
       if (index == 2) {
         _qRcodeHelper.QRCodePostResult();
       } else {
+        _prevselectedIndex=_selectedIndex;
         _selectedIndex = index;
       }
     });
@@ -62,6 +64,7 @@ class ViewTemplateStates extends State<ViewTemplate> {
   void initState() {
     _qRcodeHelper=new QRcodeHelper(context);
     lock = new Lock();
+    _prevselectedIndex=0;
   }
 
   @override
@@ -69,18 +72,37 @@ class ViewTemplateStates extends State<ViewTemplate> {
     // TODO: implement build
     if (!isGetting && GlobleValue.deviceId == null) {
       isGetting = true;
-      _getId();
+      _getId(context);
     }
     return InitDevice();
   }
-
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget InitDevice() {
-    if (GlobleValue.deviceId == null) {
-      return Center(child: CircularProgressIndicator());
-    } else
+    /*if (GlobleValue.deviceId == null) {
+      return
+        Scaffold(
+            key: _scaffoldKey,
+            body:
+        Center(
+          child: CircularProgressIndicator()));
+    } else*/
       return Scaffold(
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
+        key: _scaffoldKey,
+        body:
+        AnimatedSwitcher(
+          duration: Duration(milliseconds: 150),
+            transitionBuilder:(Widget child, Animation<double> animation) {
+              var tween;
+            if(_prevselectedIndex>_selectedIndex)
+               tween=Tween<Offset>(begin: Offset(-1, 0), end: Offset(0, 0));
+            else
+              tween=Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0));
+              return MySlideTransition(
+                child: child,
+                position: tween.animate(animation),
+              );
+            },
+            child:_widgetOptions.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
@@ -109,8 +131,14 @@ class ViewTemplateStates extends State<ViewTemplate> {
         ),
       );
   }
-  Future<void> _getId() async {
-    if(await getId(context))
-      setState(() {});
+  Future<void> _getId(BuildContext context) async {
+      Object data= await getId(context);
+      setState(() {
+        if(data is String) {
+          final snackBar = SnackBar(
+              content: Text(data));
+          _scaffoldKey.currentState.showSnackBar(snackBar);
+        }
+      });
   }
 }

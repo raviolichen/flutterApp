@@ -57,14 +57,21 @@ void showLoading(BuildContext context) {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
-          child: new SizedBox(
-            width: 100,height: 100,
-            child: AspectRatio(  aspectRatio: 1, child:new CircularProgressIndicator()),
+            child:
+                Container(
+                  height: 150,
+                  child:
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("處理中..."),
+                  Padding(padding: EdgeInsets.all(20),),
+                  SizedBox( width: 50,height: 50,child:CircularProgressIndicator())]),
           ),
         );
       }).then((_) => isDiaglogShowing = false);
 }
-Future<bool> getId(BuildContext context) async {
+Future<Object> getId(BuildContext context) async {
   if(GlobleValue.deviceId==null) {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Theme
@@ -88,6 +95,7 @@ Future<bool> getId(BuildContext context) async {
       GlobleValue.Golds = data["golds"];
       return true;
     }
-    else
-      return false;
+    else{
+      return data["result"].toString();
+    }
   }
