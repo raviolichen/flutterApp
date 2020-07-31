@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'CheckBoxListViewPage.dart';
 import 'helps/GlobleValue.dart';
 import 'modules/EventItem.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,6 @@ import 'DataService.dart';
 import 'helps/globlefun.dart';
 import 'helps/helps.dart';
 import 'modules/detailEventitem.dart';
-
-
 class URLLauncher {
   launchURL(String url) async {
     if (await canLaunch(url)) {
@@ -22,7 +21,6 @@ class URLLauncher {
     }
   }
 }
-
 class DetailEventPagefix extends StatefulWidget {
   final EventItem eventItem;
 
@@ -31,7 +29,6 @@ class DetailEventPagefix extends StatefulWidget {
   @override
   _DetailEventPageStatfulState createState() => _DetailEventPageStatfulState(eventItem: eventItem);
 }
-
 class _DetailEventPageStatfulState extends State<DetailEventPagefix> {
   final EventItem eventItem;
   _DetailEventPageStatfulState({this.eventItem});
@@ -90,9 +87,9 @@ class _DetailEventPageStatfulState extends State<DetailEventPagefix> {
     await _listController.loadUrl(Uri.dataFromString(kNavigationExamplePage,
         mimeType: 'text/html', parameters: {'charset': 'utf-8'}).toString());
   }
-
   DetailEventItem detailItem;
   Widget ActiveButton = Container();
+  Widget VoteButton = Container();
   Widget CancelButton= Container();
   @override
     Widget build(BuildContext context) {
@@ -124,7 +121,7 @@ class _DetailEventPageStatfulState extends State<DetailEventPagefix> {
               child: _webview,
             ),
             ActiveButton,
-            CancelButton
+            VoteButton
           ]),
         )]),
         ),
@@ -141,8 +138,6 @@ class _DetailEventPageStatfulState extends State<DetailEventPagefix> {
       detailItem.ButtonText="未登入，無法使用報名";
       detailItem.ButtonEnable="false";
     }
-
-
 
     if (detailItem.eventType.toLowerCase().compareTo("info") != 0)
       ActiveButton = Padding(
@@ -162,10 +157,61 @@ class _DetailEventPageStatfulState extends State<DetailEventPagefix> {
               style: TextStyle(color: Colors.white)),
         ),
       );
+
+    if (detailItem.voteButtonEnable!=null&&detailItem.voteButtonEnable.length != 0)
+      VoteButton = Padding(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
+        child: RaisedButton(
+          color: detailItem.voteButtonEnable.compareTo("true")==0?ButtonColorNormal:ButtonColor_UNSelect,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          onPressed: ()async{
+            if(detailItem.voteButtonEnable.compareTo("true")==0) {
+              DetailType dt;
+              if(detailItem.vtype.contains("store"))
+                dt=DetailType.DetailListPage;
+              else if(detailItem.vtype.contains("Slvs")){
+                dt=DetailType.DetailPage;
+              }
+              CompleteVote (dt);
+            }
+          },
+          padding: EdgeInsets.all(12),
+          //  color: appGreyColor,
+          child: Text(detailItem.voteButtonText,
+              style: TextStyle(color: Colors.white)),
+        ),
+      );
     setState(() {
 
     });
 
+  }
+  void CompleteVote (DetailType dt) async{
+    String result =await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => new CheckBoxListViewPage(
+              RouterName: GlobleValue.GetVoteList,
+              appTitle: eventItem.title,
+              Id: detailItem.vId,
+              detailType:dt,voteCount: detailItem.votecount,)));
+    if(result.length>0) {
+      _showMyDialog("完成投票中...",false);
+      String isSuccess = await VoteItemDataService().postVoteValue(
+          GlobleValue.userId.toString(),detailItem.vId.toString(),  GlobleValue.token,
+          result);
+      if (isSuccess.toLowerCase().contains("isok")) {
+        Navigator.pop(context);
+        _showMyDialog("完成投票中",true);
+        setState(() {
+          detailItem.voteButtonText="已經完成投票";
+          detailItem.voteButtonEnable="false";
+          showButton();
+        });
+      }
+    }
   }
   void CompleteSign () async{
     FeildItemList feildItemList = await FeildItemDataService()

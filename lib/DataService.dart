@@ -66,6 +66,28 @@ class QRcodeDataService{
       return null;
   }
 }
+class VoteItemDataService{
+  Future<String> postVoteValue(String userId,String vId, String token, String data) async {
+    String connectString = GlobleValue.PostVoteList;
+    Map postdata = {
+      "vId":vId,
+      "userId":userId,
+      "token":token,
+      "data":base64.encode(utf8.encode(data))
+    };
+    http.Response response = await http.post(connectString,
+        headers: {"Content-Type":"application/json"},
+        body: "'"+json.encode(postdata)+"'");
+    if (response.statusCode == 200) {
+      return response.body;
+    } else
+      return "";
+  }
+
+
+}
+
+
 class FeildItemDataService {
   Future<String> postEeildValue(int eId,String userId, String token, String data) async {
     String connectString = GlobleValue.EventitemSignPostAPI;
@@ -93,6 +115,7 @@ class FeildItemDataService {
     return feildItems;
   }
 }
+
 class DetailEventDataService {
   Future<String> _loadDetailAsset(int eId,int userId) async {
     return await _Get(   GlobleValue.EventitemAPI + '?eId=' + eId.toString() + '&userId='+userId.toString());

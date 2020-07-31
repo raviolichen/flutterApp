@@ -8,7 +8,7 @@ class GlobleValue extends InheritedWidget {
   static String Golds;
 
   //static const ServerIp = "http://192.168.5.26:8081/api/";
-  static const ServerIp = "http://192.168.0.102:50780/api/";
+  static const ServerIp = "http://app.chushang.gov.tw/api/";
 
 //api Action
   static const HomePageJsonAPI = ServerIp + "_HomePage/GetHomePageJson";
@@ -24,6 +24,8 @@ class GlobleValue extends InheritedWidget {
   static const UserSlvGetAPI = ServerIp + "UserSlv/GetUserSlv";
   static const OwnerSlvGetAPI = ServerIp + "UserSlv/GetOwnerSlv";
   static const SlvDetailGetAPI = ServerIp + "UserSlv/GetSlvDetail";
+  static const GetVoteList = ServerIp + "eventitem/GetVoteList";
+  static const PostVoteList = ServerIp + "eventitem/PostVoteData";
 
 
   @override

@@ -71,7 +71,7 @@ class EventPage extends StatelessWidget {
         },
         padding: EdgeInsets.all(12),
         //  color: appGreyColor,
-        child: Text(cancelSubmitText, style: TextStyle(color: Colors.white)),
+        child: Text(cancelSignText, style: TextStyle(color: Colors.white)),
       ),
     );
 

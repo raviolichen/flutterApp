@@ -181,12 +181,12 @@ class _DetailListPageState extends State<DetailListPage> {
                   right: 16,
                   child: Row(
                     children: <Widget>[
-                      MyFAB(url: detailItem.StoreWeb, icon: Icon(Icons.web)),
-                      MyFAB(
-                          url: detailItem.storeWebF, icon: Icon(Icons.people)),
-                      MyFAB(
+                      detailItem.StoreWeb.length>0?MyFAB(url: detailItem.StoreWeb, icon: Icon(Icons.web)):Container(),
+                      detailItem.storeWebF.length>0?MyFAB(
+                          url: detailItem.storeWebF, icon: Icon(Icons.people)):Container(),
+                      detailItem.stroeMapLocation.length>0?MyFAB(
                           url: detailItem.stroeMapLocation,
-                          icon: Icon(Icons.map))
+                          icon: Icon(Icons.map)):Container()
                     ],
                   ))
               : Container(),

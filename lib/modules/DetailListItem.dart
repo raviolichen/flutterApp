@@ -5,7 +5,6 @@ class DetailListItem {
   String stroeMapLocation;
   List<String> potos;
   List<storeProduct> products;
-
   DetailListItem({
     this.storeHtml,
     this .StoreWeb,

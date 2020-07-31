@@ -71,6 +71,61 @@ void showLoading(BuildContext context) {
         );
       }).then((_) => isDiaglogShowing = false);
 }
+Future<void> showMyDialog(BuildContext context,String text,bool isShowAction ) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      if(isShowAction)
+        return AlertDialog(
+          title: Text(text),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('確定'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      else
+        return AlertDialog(
+          title: Text(text),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Center(child: CircularProgressIndicator()),
+              ],
+            ),
+          ),
+        );
+    },
+  );
+}
+Future<bool> comfrirm(BuildContext context,String text) async {
+  return showDialog<bool>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(text),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('確定'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),FlatButton(
+              child: Text('取消'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            )
+          ],
+        );
+    },
+  );
+}
 Future<Object> getId(BuildContext context) async {
   if(GlobleValue.deviceId==null) {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
