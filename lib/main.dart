@@ -102,19 +102,21 @@ class ViewTemplateStates extends State<ViewTemplate>
 
   void BulidLoadingPage() {
     final Tween PosTween =
-        new Tween<Offset>(begin: Offset(0, 0), end: Offset(0, 1));
+        new Tween<Offset>(begin: Offset(0, -1), end: Offset(0, 0.4));
     final Tween OcTween = new Tween<double>(begin: 0.0, end: 1.0);
     Offsetanimation = PosTween.animate(controller);
     final Widget showText =Container(
-            padding: EdgeInsets.only(left: 50, right: 50),
-            child: RichText(
+        decoration:BoxDecoration (color:Color.fromARGB(255, 250,250,250) , border: Border(bottom: BorderSide(width: 0.5,color: Colors.black54))),
+        child:Padding(
+        padding: EdgeInsets.all(20),
+            child:RichText(
               text: TextSpan(
                 text: "無法連線上伺服器，請確認網路或稍後再嘗試。您可以顯示裝置QRcode，由工作人員進行相關作業。",
-                style: TextStyle(color: Colors.black38, fontSize: 16),
+                style: TextStyle(color: Colors.black54, fontSize: 16),
               ),
-            ));
+            )));
     final Widget showButton = Container(
-        padding: EdgeInsets.only(bottom: 50),child:RaisedButton(
+        padding: EdgeInsets.only(bottom: 100),child:RaisedButton(
         color: ButtonColorNormal,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -133,6 +135,7 @@ class ViewTemplateStates extends State<ViewTemplate>
     loadinPage = Container(
         decoration: new BoxDecoration(color: Colors.white),
             child: Stack(
+              alignment: AlignmentDirectional.topStart,
           children: <Widget>[
              Center(child:  SizedBox(width: 50, height: 50, child:CircularProgressIndicator())),
             Opacity(
