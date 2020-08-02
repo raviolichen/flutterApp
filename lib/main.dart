@@ -234,7 +234,7 @@ class ViewTemplateStates extends State<ViewTemplate>
     return screen;
   }
   Future<void> _getId(BuildContext context) async {
-    Object data = await getId(context);
+    Object data = await getId(context,false);
     setState(() {
       isGetting = false;
       if (data is String) {

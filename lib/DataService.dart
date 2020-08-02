@@ -24,8 +24,8 @@ class RecordDataService {
   }
 }
 class UserDataService{
-  Future<Map<String, dynamic>> getUserId(String deviceId) async {
-    String connectString = GlobleValue.UserGetIdAPI+"?deviceId="+deviceId;
+  Future<Map<String, dynamic>> getUserId(String deviceId,bool isOnlyUserData) async {
+    String connectString = GlobleValue.UserGetIdAPI+"?deviceId="+deviceId+":"+isOnlyUserData.toString();
     http.Response response = await http.get(connectString);
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonmap=json.decode(response.body);

@@ -143,7 +143,7 @@ Future<bool> comfrirm(BuildContext context,String text) async {
     },
   );
 }
-Future<Object> getId(BuildContext context) async {
+Future<Object> getId(BuildContext context,bool isOnlyUserData) async {
   if(GlobleValue.deviceId==null) {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Theme
@@ -159,7 +159,7 @@ Future<Object> getId(BuildContext context) async {
     }
   }
     Map<String, dynamic> data =
-    await UserDataService().getUserId(GlobleValue.deviceId);
+    await UserDataService().getUserId(GlobleValue.deviceId,isOnlyUserData);
     GlobleValue.message_publish=data["messagePublish"];
     if(data["result"].toString().compareTo("true")==0) {
       GlobleValue.userId = int.parse(data["userId"]);

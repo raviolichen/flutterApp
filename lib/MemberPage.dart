@@ -197,7 +197,7 @@ class MemberPageState extends State<MemberPage> with  TickerProviderStateMixin{
   bool isGetting=false;
   void _getRecords() async {
     isGetting=true;
-    await getId(context);
+    await getId(context,true);
     if(userId!=null)
     _records = await RecordDataService().loadRecords(GlobleValue.userId.toString(),GlobleValue.UserSlvGetAPI);
     setState(() {
