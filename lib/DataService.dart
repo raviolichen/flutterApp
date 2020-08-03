@@ -83,11 +83,7 @@ class VoteItemDataService{
     } else
       return "";
   }
-
-
 }
-
-
 class FeildItemDataService {
   Future<String> postEeildValue(int eId,String userId, String token, String data) async {
     String connectString = GlobleValue.EventitemSignPostAPI;
