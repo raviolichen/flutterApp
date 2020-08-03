@@ -24,13 +24,8 @@ class RecordDataService {
   }
 }
 class UserDataService{
-<<<<<<< HEAD
-  Future<Map<String, dynamic>> getUserId(String deviceId) async {
-    String connectString = GlobleValue.UserGetIdAPI+"?deviceId="+deviceId;
-=======
   Future<Map<String, dynamic>> getUserId(String deviceId,bool isOnlyUserData) async {
     String connectString = GlobleValue.UserGetIdAPI+"?deviceId="+deviceId+":"+isOnlyUserData.toString();
->>>>>>> origin/master
     http.Response response = await http.get(connectString);
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonmap=json.decode(response.body);
@@ -51,11 +46,7 @@ class UserDataService{
   }
 }
 class QRcodeDataService{
-<<<<<<< HEAD
-  Future< Map<String, dynamic> > postQrcodeValue(int userId, String token, String data)async  {
-=======
   Future< Map<String, dynamic> > postQrcodeValue(int userId, String token, String data,String proxydata)async  {
->>>>>>> origin/master
     //check userId
     if(userId==null||token==null){
       return json.decode("{\"result\":\"您尚未登入帳號，請確認網路狀態，或至會員頁面進行登入\"}");
@@ -66,11 +57,8 @@ class QRcodeDataService{
       "data":encydata(token,data),
       "time":DateTime.now().toString()
     };
-<<<<<<< HEAD
-=======
     if(proxydata!=null&&proxydata.length>0)
       postdata["proxy"]=proxydata;
->>>>>>> origin/master
     http.Response response = await http.post(connectString,
         headers: {"Content-Type":"application/json"},
         body: "'"+json.encode(postdata)+"'");
@@ -125,10 +113,6 @@ class FeildItemDataService {
     return feildItems;
   }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 class DetailEventDataService {
   Future<String> _loadDetailAsset(int eId,int userId) async {
     return await _Get(   GlobleValue.EventitemAPI + '?eId=' + eId.toString() + '&userId='+userId.toString());
@@ -157,10 +141,6 @@ class HomePageJsonDataService {
   Future<String> _loadDetailAsset() async {
     return await _Get(GlobleValue.HomePageJsonAPI);
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
   Future<HomePageData> loadDetail() async {
     String jsonString = await _loadDetailAsset();
     final jsonResponse = json.decode(jsonString);
@@ -172,10 +152,6 @@ class TypePageDataService {
   Future<String> _loadDetailAsset() async {
     return await _Get(GlobleValue.StoreTypeGetAPI);
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
   Future<TypeItemList> loadData() async {
     String jsonString = await _loadDetailAsset();
     final jsonResponse = json.decode(jsonString);
@@ -196,13 +172,6 @@ class DetailListDataService {
   }
 }
 Future<String> _Get(String connect) async{
-<<<<<<< HEAD
-  http.Response response = await http.get(connect);
-  if (response.statusCode == 200) {
-    return response.body;
-  } else
-    return "";
-=======
   try {
     http.Response response = await http.get(connect);
     if (response.statusCode == 200) {
@@ -214,5 +183,4 @@ Future<String> _Get(String connect) async{
 
     return null;
   }
->>>>>>> origin/master
 }

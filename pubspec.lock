@@ -148,11 +148,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "0.12.2"
-=======
-    version: "0.12.1"
->>>>>>> origin/master
   http_parser:
     dependency: transitive
     description:
@@ -286,8 +282,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.4"
-<<<<<<< HEAD
-=======
   qr:
     dependency: transitive
     description:
@@ -302,7 +296,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.0"
->>>>>>> origin/master
   quiver:
     dependency: transitive
     description:
@@ -370,11 +363,7 @@ packages:
       name: synchronized
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "2.2.0+2"
-=======
-    version: "2.2.0+1"
->>>>>>> origin/master
   term_glyph:
     dependency: transitive
     description:

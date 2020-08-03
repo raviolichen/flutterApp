@@ -1,23 +1,14 @@
 import 'package:flutter/cupertino.dart';
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
 class GlobleValue extends InheritedWidget {
   static int userId;
   static String deviceId;
   static String token;
   static String userName;
   static String Golds;
-<<<<<<< HEAD
-
-  //static const ServerIp = "http://192.168.5.26:8081/api/";
-=======
   static bool proxy;
   static String message_publish;
   static const proxycode="P0000000000000R0000000O0000000X0000000000000Y000";
   //static const ServerIp = "http://192.168.0.102:50780/api/";
->>>>>>> origin/master
   static const ServerIp = "http://app.chushang.gov.tw/api/";
 
 //api Action

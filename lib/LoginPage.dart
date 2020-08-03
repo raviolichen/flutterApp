@@ -51,10 +51,6 @@ class _LoginPageState extends State<LoginPage>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
     final submitButton = Padding(
       padding: EdgeInsets.all(15.0),
       child: RaisedButton(
@@ -100,10 +96,6 @@ class _LoginPageState extends State<LoginPage>{
         child: Text(submitButtonText, style: TextStyle(color: Colors.white)),
       ),
     );
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/master
     List<Widget> FeildWidgetList =new List();
     FeildWidgetList.add(
         Center(
@@ -129,10 +121,5 @@ class _LoginPageState extends State<LoginPage>{
       ),
     );
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin/master
   }
 }

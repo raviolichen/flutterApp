@@ -1,10 +1,7 @@
 import 'package:device_info/device_info.dart';
 import 'package:encrypt/encrypt.dart' as _encypt;
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
 import 'package:qr_flutter/qr_flutter.dart';
->>>>>>> origin/master
 import '../DataService.dart';
 import 'GlobleValue.dart';
 String htmlformat(String data) {
@@ -53,8 +50,6 @@ String encydata(String token, String data) {
       mode: _encypt.AESMode.cbc, padding: 'PKCS7'));
   return encrypter.encrypt(data, iv: _encypt.IV.fromUtf8(iv)).base64;
 }
-<<<<<<< HEAD
-=======
 String decryptdata(String token, String data) {
   try {
     String Akey = token.substring(0, 32);
@@ -71,7 +66,6 @@ String decryptdata(String token, String data) {
 
 
 
->>>>>>> origin/master
 bool isDiaglogShowing;
 void showLoading(BuildContext context) {
   isDiaglogShowing = true;
@@ -149,11 +143,7 @@ Future<bool> comfrirm(BuildContext context,String text) async {
     },
   );
 }
-<<<<<<< HEAD
-Future<Object> getId(BuildContext context) async {
-=======
 Future<Object> getId(BuildContext context,bool isOnlyUserData) async {
->>>>>>> origin/master
   if(GlobleValue.deviceId==null) {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Theme
@@ -169,29 +159,20 @@ Future<Object> getId(BuildContext context,bool isOnlyUserData) async {
     }
   }
     Map<String, dynamic> data =
-<<<<<<< HEAD
-    await UserDataService().getUserId(GlobleValue.deviceId);
-=======
     await UserDataService().getUserId(GlobleValue.deviceId,isOnlyUserData);
     GlobleValue.message_publish=data["messagePublish"];
->>>>>>> origin/master
     if(data["result"].toString().compareTo("true")==0) {
       GlobleValue.userId = int.parse(data["userId"]);
       GlobleValue.token = data["token"];
       GlobleValue.userName = data["userName"];
       GlobleValue.Golds = data["golds"];
-<<<<<<< HEAD
-=======
       GlobleValue.proxy = data["proxy"].toString().toLowerCase()=="true";
->>>>>>> origin/master
       return true;
     }
     else{
       return data["result"].toString();
     }
   }
-<<<<<<< HEAD
-=======
   Widget FadinHelp(TickerProvider provider,Widget widget){
     final fadincontroller=AnimationController(vsync:provider,duration:Duration(milliseconds: 300) );
     final fadinanimation=Tween(begin: 0.0,end: 1.0).animate(fadincontroller);
@@ -217,4 +198,3 @@ Future<void> ShowQRcodeImage( BuildContext context,QrImage qrImage) async {
     },
   );
 }
->>>>>>> origin/master
