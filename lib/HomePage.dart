@@ -1,4 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+<<<<<<< HEAD
+=======
+import 'package:zhushanApp/components/loading.dart';
+import 'package:zhushanApp/helps/globlefun.dart';
+import 'helps/GlobleValue.dart';
+>>>>>>> origin/master
 import 'modules/EventItem.dart';
 import 'package:flutter/material.dart';
 import 'components/CusListTile.dart';
@@ -11,6 +17,7 @@ import 'components/banner.dart';
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomePageState();
+<<<<<<< HEAD
 }
 
 class _HomePageState extends State<HomePage> {
@@ -21,6 +28,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     // TODO: implement build
 
+=======
+  HomePage({Key key}) : super(key: key);
+}
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+   HomePageData _datas = new HomePageData();
+  List<String> _imgData;
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+>>>>>>> origin/master
     Widget _buildListItem(BuildContext context, EventItem record) {
       return Card(
         key: ValueKey(record.eId),
@@ -60,7 +77,10 @@ class _HomePageState extends State<HomePage> {
         ),
       );
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     Widget _buildList(BuildContext context) {
       List<Widget> recordlist = this
           ._datas
@@ -84,14 +104,24 @@ class _HomePageState extends State<HomePage> {
         },
       );
     }
+<<<<<<< HEAD
 
     return Scaffold(
       backgroundColor: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
       body: _buildList(context),
+=======
+    return Scaffold(
+      backgroundColor: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+      body: isGetting?LoadingHelper():FadinHelp(this,  _buildList(context)),
+>>>>>>> origin/master
       resizeToAvoidBottomPadding: false,
     );
   }
 
+<<<<<<< HEAD
+=======
+  String message_publish;
+>>>>>>> origin/master
   @override
   void initState() {
     super.initState();
@@ -99,10 +129,18 @@ class _HomePageState extends State<HomePage> {
     // _datas.banner=new List();
     _imgData = new List();
     _getRecords();
+<<<<<<< HEAD
+=======
+    message_publish=GlobleValue.message_publish;
+>>>>>>> origin/master
   }
 
   bool isGetting = false;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
   void _getRecords() async {
     if (!isGetting) {
       isGetting=true;
@@ -110,9 +148,24 @@ class _HomePageState extends State<HomePage> {
     }
     setState(() {
       _imgData = _datas.banner;
+<<<<<<< HEAD
     });
   }
 
+=======
+      isGetting=false;
+      if( GlobleValue.message_publish!=null&& GlobleValue.message_publish.length>0) {
+        GlobleValue.message_publish="";
+        Future.delayed(Duration(milliseconds:1000),
+            showmessage_publish
+        );
+      }
+    });
+  }
+  Future<void> showmessage_publish(){
+    showMyDialog(context, message_publish, true);
+  }
+>>>>>>> origin/master
   void NavigatorPage(BuildContext context, EventItem record) {
     Navigator.push(
         context,

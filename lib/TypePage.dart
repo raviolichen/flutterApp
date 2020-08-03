@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+import 'package:zhushanApp/components/loading.dart';
+import 'package:zhushanApp/helps/globlefun.dart';
+
+>>>>>>> origin/master
 import 'helps/GlobleValue.dart';
 import 'modules/TypeItemList.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +18,14 @@ class TypePage extends StatefulWidget {
   _TypePageState createState() {
     return _TypePageState();
   }
+<<<<<<< HEAD
 }
 class _TypePageState extends State<TypePage> {
+=======
+  TypePage({Key key}) : super(key: key);
+}
+class _TypePageState extends State<TypePage>  with TickerProviderStateMixin{
+>>>>>>> origin/master
   TypeItemList typeItemList=new TypeItemList();
   Widget _appBarTitle = new Text(TypePageappTitle);
   @override
@@ -27,7 +39,10 @@ class _TypePageState extends State<TypePage> {
           title: _appBarTitle
       );
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     Widget _buildListItem(BuildContext context, TypeItem typeitem) {
       return
         Container(
@@ -55,7 +70,10 @@ class _TypePageState extends State<TypePage> {
             ),
           )));
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     Widget _buildList(BuildContext context) {
       return ListView(
         padding: const EdgeInsets.only(top: 20.0),
@@ -68,10 +86,18 @@ class _TypePageState extends State<TypePage> {
     return Scaffold(
       appBar: _buildBar(context),
       //backgroundColor: appDarkGreyColor,
+<<<<<<< HEAD
       body:_buildList(context),
       resizeToAvoidBottomPadding: false,
     );
   }
+=======
+      body:isGetting?LoadingHelper():FadinHelp(this,_buildList(context)),
+      resizeToAvoidBottomPadding: false,
+    );
+  }
+  bool isGetting = false;
+>>>>>>> origin/master
   @override
   void initState() {
     super.initState();
@@ -79,8 +105,15 @@ class _TypePageState extends State<TypePage> {
     typeItemList.typeItemList=new List();
   }
   void _getRecords() async {
+<<<<<<< HEAD
     typeItemList = await TypePageDataService().loadData();
     setState(() {
+=======
+    isGetting=true;
+    typeItemList = await TypePageDataService().loadData();
+    setState(() {
+      isGetting=false;
+>>>>>>> origin/master
     });
   }
 }

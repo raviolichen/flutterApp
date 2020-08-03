@@ -1,6 +1,10 @@
 import 'package:device_info/device_info.dart';
 import 'package:encrypt/encrypt.dart' as _encypt;
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import 'package:qr_flutter/qr_flutter.dart';
+>>>>>>> origin/master
 import '../DataService.dart';
 import 'GlobleValue.dart';
 String htmlformat(String data) {
@@ -49,6 +53,25 @@ String encydata(String token, String data) {
       mode: _encypt.AESMode.cbc, padding: 'PKCS7'));
   return encrypter.encrypt(data, iv: _encypt.IV.fromUtf8(iv)).base64;
 }
+<<<<<<< HEAD
+=======
+String decryptdata(String token, String data) {
+  try {
+    String Akey = token.substring(0, 32);
+    String iv = token.substring(32, 48);
+    final decrypter = _encypt.Encrypter(_encypt.AES(_encypt.Key.fromUtf8(Akey),
+        mode: _encypt.AESMode.cbc, padding: 'PKCS7'));
+    return decrypter.decrypt(
+        _encypt.Encrypted.fromBase64(data), iv: _encypt.IV.fromUtf8(iv));
+  }
+  catch(e){
+    return null;
+  }
+}
+
+
+
+>>>>>>> origin/master
 bool isDiaglogShowing;
 void showLoading(BuildContext context) {
   isDiaglogShowing = true;
@@ -126,7 +149,11 @@ Future<bool> comfrirm(BuildContext context,String text) async {
     },
   );
 }
+<<<<<<< HEAD
 Future<Object> getId(BuildContext context) async {
+=======
+Future<Object> getId(BuildContext context,bool isOnlyUserData) async {
+>>>>>>> origin/master
   if(GlobleValue.deviceId==null) {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Theme
@@ -142,15 +169,52 @@ Future<Object> getId(BuildContext context) async {
     }
   }
     Map<String, dynamic> data =
+<<<<<<< HEAD
     await UserDataService().getUserId(GlobleValue.deviceId);
+=======
+    await UserDataService().getUserId(GlobleValue.deviceId,isOnlyUserData);
+    GlobleValue.message_publish=data["messagePublish"];
+>>>>>>> origin/master
     if(data["result"].toString().compareTo("true")==0) {
       GlobleValue.userId = int.parse(data["userId"]);
       GlobleValue.token = data["token"];
       GlobleValue.userName = data["userName"];
       GlobleValue.Golds = data["golds"];
+<<<<<<< HEAD
+=======
+      GlobleValue.proxy = data["proxy"].toString().toLowerCase()=="true";
+>>>>>>> origin/master
       return true;
     }
     else{
       return data["result"].toString();
     }
   }
+<<<<<<< HEAD
+=======
+  Widget FadinHelp(TickerProvider provider,Widget widget){
+    final fadincontroller=AnimationController(vsync:provider,duration:Duration(milliseconds: 300) );
+    final fadinanimation=Tween(begin: 0.0,end: 1.0).animate(fadincontroller);
+    fadincontroller.forward();
+  return  FadeTransition(opacity: fadinanimation,child:widget);
+  }
+Future<void> ShowQRcodeImage( BuildContext context,QrImage qrImage) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        content:SizedBox(height: 250,child: Center(child:qrImage)),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('取消'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+>>>>>>> origin/master

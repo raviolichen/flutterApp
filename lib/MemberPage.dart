@@ -1,4 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+<<<<<<< HEAD
+=======
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:zhushanApp/components/loading.dart';
+>>>>>>> origin/master
 import 'ListViewPage.dart';
 import 'helps/GlobleValue.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +19,11 @@ class MemberPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => MemberPageState();
 }
+<<<<<<< HEAD
 class MemberPageState extends State<MemberPage> {
+=======
+class MemberPageState extends State<MemberPage> with  TickerProviderStateMixin{
+>>>>>>> origin/master
   RecordList _records = new RecordList();
   @override
   Widget build(BuildContext context) {
@@ -63,7 +72,10 @@ class MemberPageState extends State<MemberPage> {
         ),
       );
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     Widget _buildList(BuildContext context) {
       String _goldnum=GlobleValue.Golds==null?"0":GlobleValue.Golds;
       String _userId=GlobleValue.userId.toString().padLeft(10, '0');
@@ -111,6 +123,7 @@ class MemberPageState extends State<MemberPage> {
                     child: Container(
                       padding: EdgeInsets.only(left: 10,right: 10),
                         child:
+<<<<<<< HEAD
                           RichText(
                             text: TextSpan(
                               text: GlobleValue.userName+"\n",
@@ -121,6 +134,42 @@ class MemberPageState extends State<MemberPage> {
                               ],
                             ),
                           ),
+=======
+                            Column(children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(top: 15),
+                                child:RichText(
+                              text: TextSpan(
+                                text: GlobleValue.userName+"\n",
+                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 24),
+                                children: <TextSpan>[
+                                  TextSpan(text: _userId+"\n", style: TextStyle(fontWeight: FontWeight.normal,fontSize: 16)),
+                                  TextSpan(text: "金幣數量:"+_goldnum ,style: TextStyle(fontWeight: FontWeight.normal,fontSize: 16)),
+                                ],
+                              ),
+                            )),
+                              Padding(
+                                padding: EdgeInsets.only(top: 5,bottom: 15),
+                                child: RaisedButton(
+                                  color: ButtonColorNormal,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  onPressed: () {
+                                    ShowQRcodeImage(context,QrImage(
+                                      data: encydata(GlobleValue. proxycode,GlobleValue.deviceId),
+                                      version: QrVersions.auto,
+                                      size: 200,
+                                      gapless: false,
+                                    ));
+                                  },
+                                  //  color: appGreyColor,
+                                  child: Text("顯示裝置QRcode", style: TextStyle(color: Colors.white)),
+                                ),
+                              )
+                            ])
+                         ,
+>>>>>>> origin/master
                       )),
                     ]),
               ),
@@ -143,9 +192,14 @@ class MemberPageState extends State<MemberPage> {
         },
       );
     }
+<<<<<<< HEAD
 
     return
       AnimatedSwitcher(
+=======
+    return
+      isGetting?LoadingHelper(): FadinHelp(this,AnimatedSwitcher(
+>>>>>>> origin/master
         duration: Duration(milliseconds: 350),
         transitionBuilder: (Widget child, Animation<double> animation) {
           var tween=Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0));
@@ -154,7 +208,11 @@ class MemberPageState extends State<MemberPage> {
             position: tween.animate(animation),
           );
         },child:
+<<<<<<< HEAD
     GlobleValue.userId==null? LoginPage(this):Scaffold(
+=======
+      GlobleValue.userId==null? LoginPage(this):Scaffold(
+>>>>>>> origin/master
       appBar: new AppBar(
         title: new Text(memberappTitle),
         backgroundColor: ButtonColorSubmit,
@@ -162,13 +220,18 @@ class MemberPageState extends State<MemberPage> {
       backgroundColor: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
       body: _buildList(context),
       resizeToAvoidBottomPadding: false,
+<<<<<<< HEAD
     ));
+=======
+    )));
+>>>>>>> origin/master
   }
   @override
   void initState() {
     super.initState();
     _records.records = new List();
     _getRecords();
+<<<<<<< HEAD
 
 
 
@@ -179,6 +242,18 @@ class MemberPageState extends State<MemberPage> {
     await getId(context);
     _records = await RecordDataService().loadRecords(GlobleValue.userId.toString(),GlobleValue.UserSlvGetAPI);
     setState(() {});
+=======
+  }
+  bool isGetting=false;
+  void _getRecords() async {
+    isGetting=true;
+    await getId(context,true);
+    if(userId!=null)
+    _records = await RecordDataService().loadRecords(GlobleValue.userId.toString(),GlobleValue.UserSlvGetAPI);
+    setState(() {
+      isGetting=false;
+    });
+>>>>>>> origin/master
   }
   void NavigatorPage(BuildContext context,Record record){
     Navigator.push(
@@ -186,10 +261,14 @@ class MemberPageState extends State<MemberPage> {
         MaterialPageRoute(
             builder: (context) => new ListViewPage(RouterName: GlobleValue.OwnerSlvGetAPI,appTitle: record.title,Id:record.id+"&userId="+GlobleValue.userId.toString().toString(),detailType: DetailType.DetailPage,)));
   }
+<<<<<<< HEAD
 
 }
 
 
+=======
+}
+>>>>>>> origin/master
 class MySlideTransition extends AnimatedWidget {
   MySlideTransition({
     Key key,

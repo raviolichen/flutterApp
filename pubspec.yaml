@@ -35,6 +35,10 @@ dependencies:
   http: any
   barcode_scan: any
   cached_network_image: 2.2.0+1
+<<<<<<< HEAD
+=======
+  qr_flutter: ^3.1.0
+>>>>>>> origin/master
 
 dev_dependencies:
   flutter_test:

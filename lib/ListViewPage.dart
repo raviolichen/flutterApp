@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'components/CusListTile.dart';
 import 'DetailListPage.dart';
 import 'DetailPage.dart';
+<<<<<<< HEAD
+=======
+import 'components/loading.dart';
+import 'helps/globlefun.dart';
+>>>>>>> origin/master
 import 'helps/helps.dart';
 import 'modules/RecordList.dart';
 import 'modules/Record.dart';
@@ -21,7 +26,11 @@ class ListViewPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ListViewPageState(Id,appTitle, RouterName,detailType);
 }
+<<<<<<< HEAD
 class _ListViewPageState extends State<ListViewPage> {
+=======
+class _ListViewPageState extends State<ListViewPage> with TickerProviderStateMixin {
+>>>>>>> origin/master
   String RouterName;
   String Id;
   DetailType detailType;
@@ -138,11 +147,21 @@ class _ListViewPageState extends State<ListViewPage> {
             .toList(),
       );
     }
+<<<<<<< HEAD
 
     return Scaffold(
       appBar: _buildBar(context),
       backgroundColor: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
       body: _buildList(context),
+=======
+    final fadincontroller=AnimationController(vsync:this,duration:Duration(milliseconds: 300) );
+    final fadinanimation=Tween(begin: 0.0,end: 1.0).animate(fadincontroller);
+    fadincontroller.forward();
+    return Scaffold(
+      appBar: _buildBar(context),
+      backgroundColor: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+      body:isGetting?LoadingHelper(): FadinHelp(this,_buildList(context)),
+>>>>>>> origin/master
       resizeToAvoidBottomPadding: false,
     );
   }
@@ -153,9 +172,18 @@ class _ListViewPageState extends State<ListViewPage> {
     _filteredRecords.records = new List();
     _getRecords();
   }
+<<<<<<< HEAD
   void _getRecords() async {
     RecordList records = await RecordDataService().loadRecords(Id, RouterName);
     setState(() {
+=======
+  bool isGetting=false;
+  void _getRecords() async {
+    isGetting=true;
+    RecordList records = await RecordDataService().loadRecords(Id, RouterName);
+    setState(() {
+      isGetting=false;
+>>>>>>> origin/master
       for (Record record in records.records) {
         this._records.records.add(record);
         this._filteredRecords.records.add(record);
