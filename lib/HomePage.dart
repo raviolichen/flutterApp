@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:zhushanApp/components/loading.dart';
 import 'package:zhushanApp/helps/globlefun.dart';
+import 'components/myCachedNetworkImage.dart';
 import 'helps/GlobleValue.dart';
 import 'modules/EventItem.dart';
 import 'package:flutter/material.dart';
@@ -48,14 +49,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   child:
                   AspectRatio (
                     aspectRatio: 1.1,
-                  child: CachedNetworkImage(
-                          width: 100,
-                          height: 100,
-                          imageUrl: record.url,
-                          placeholder: (context, url) =>Center( child: SizedBox(width:30,height:30,child:CircularProgressIndicator())),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
-                          fit: BoxFit.cover,
-                        ),)
+                  child: myCachedNetworkImage(
+                    width: 100,
+                    height: 100,
+                    imageUrl: record.url),)
                 )),
           ),
         ),

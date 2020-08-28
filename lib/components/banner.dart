@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
-
 import '../helps/helps.dart';
 import 'package:flutter/material.dart';
+
+import 'myCachedNetworkImage.dart';
 
 class c_Banner extends StatefulWidget {
   final List<String> _images;
@@ -107,11 +108,8 @@ class _c_BannerState extends State<c_Banner> {
               );*/
             },
             child:
-            CachedNetworkImage(
-              imageUrl: widget._images[index % length],
-              placeholder: (context, url) => Center( child: SizedBox(width:30,height:30,child:CircularProgressIndicator())),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-              fit: BoxFit.cover,
+            myCachedNetworkImage(
+              imageUrl: widget._images[index % length]
             )
 
           );
