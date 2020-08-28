@@ -8,8 +8,8 @@ class GlobleValue extends InheritedWidget {
   static bool proxy;
   static String message_publish;
   static const proxycode="P0000000000000R0000000O0000000X0000000000000Y000";
-  //static const ServerIp = "http://192.168.0.102:50780/api/";
-  static const ServerIp = "http://app.chushang.gov.tw/api/";
+  static const ServerIp = "http://192.168.0.100:50780/api/";
+  //static const ServerIp = "https://app.zhushan.gov.tw/api/";
 
 //api Action
   static const HomePageJsonAPI = ServerIp + "_HomePage/GetHomePageJson";
