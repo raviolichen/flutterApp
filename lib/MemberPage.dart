@@ -18,6 +18,12 @@ class MemberPage extends StatefulWidget {
 }
 class MemberPageState extends State<MemberPage> with  TickerProviderStateMixin{
   RecordList _records = new RecordList();
+  RecordList _record_gets = new RecordList();
+  ScrollController _scrollController=new ScrollController();
+  int page=0;
+  int pageCount=5;
+  bool isMax=false;
+  bool isLoadMore=false;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -73,9 +79,15 @@ class MemberPageState extends State<MemberPage> with  TickerProviderStateMixin{
           .records
           .map((data) => _buildListItem(context, data))
           .toList();
-      return ListView.builder(
+      return
+        RefreshIndicator(
+            onRefresh:refresh,
+          child:
+        ListView.builder(
+          controller: _scrollController,
+          physics: const AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.only(bottom: 50),
-        itemCount: recordlist.length + 1,
+        itemCount: recordlist.length + 2,
         // +1 because you are showing one extra widget.
         itemBuilder: (BuildContext context, int index) {
           if (index == 0) {
@@ -161,46 +173,83 @@ class MemberPageState extends State<MemberPage> with  TickerProviderStateMixin{
               )
             ]);
           }
+
           int numberOfExtraWidget =
               1; // here we have 1 ExtraWidget i.e Container.
           index = index - numberOfExtraWidget; // index of actual post.
-          return recordlist[index];
+          if(index==recordlist.length){
+            return Padding(
+            padding: EdgeInsets.all(5),
+                child:Center(
+                  child:new Opacity(opacity:isGetting?1.0:0.0,child: new CircularProgressIndicator()),
+            ));
+          }
+            return recordlist[index];
         },
-      );
+      ));
+    }
+    Widget _bildMain(BuildContext context){
+      return AnimatedSwitcher(
+          duration: Duration(milliseconds: 350),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            var tween=Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0));
+            return MySlideTransition(
+              child: child,
+              position: tween.animate(animation),
+            );
+          },child:GlobleValue.userId==null? LoginPage(this):Scaffold(
+        appBar: new AppBar(
+          title: new Text(memberappTitle),
+          backgroundColor: ButtonColorSubmit,
+        ),
+        backgroundColor: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
+        body: _buildList(context),
+        resizeToAvoidBottomPadding: false,
+      ));
     }
     return
-      isGetting?LoadingHelper(): FadinHelp(this,AnimatedSwitcher(
-        duration: Duration(milliseconds: 350),
-        transitionBuilder: (Widget child, Animation<double> animation) {
-          var tween=Tween<Offset>(begin: Offset(1, 0), end: Offset(0, 0));
-          return MySlideTransition(
-            child: child,
-            position: tween.animate(animation),
-          );
-        },child:
-      GlobleValue.userId==null? LoginPage(this):Scaffold(
-      appBar: new AppBar(
-        title: new Text(memberappTitle),
-        backgroundColor: ButtonColorSubmit,
-      ),
-      backgroundColor: Color.fromARGB(0xff, 0xff, 0xff, 0xff),
-      body: _buildList(context),
-      resizeToAvoidBottomPadding: false,
-    )));
+      isGetting&&!isLoadMore?LoadingHelper():_bildMain(context);
   }
   @override
   void initState() {
     super.initState();
     _records.records = new List();
     _getRecords();
+    _scrollController.addListener(() {
+      if(_scrollController.position.maxScrollExtent==_scrollController.offset)
+       {
+         if(!isGetting) {
+           if (!isMax) {
+             page++;
+             setState(() {
+               isLoadMore=true;
+               _getRecords();
+             });
+           }
+         }
+       }
+    });
+
   }
   bool isGetting=false;
+  Future<void> refresh() async{
+    if(_records.records.length>0)
+      _records.records.clear();
+    _getRecords();
+  }
   void _getRecords() async {
     isGetting=true;
     await getId(context,true);
-    if( GlobleValue.userId!=null)
-    _records = await RecordDataService().loadRecords(GlobleValue.userId.toString(),GlobleValue.UserSlvGetAPI);
+    if( GlobleValue.userId!=null) {
+      _record_gets = await RecordDataService().loadRecords(
+          GlobleValue.userId.toString() + "&page=" + page.toString()+"&pagecount="+pageCount.toString(),
+          GlobleValue.UserSlvGetAPI);
+      if(_record_gets.records.length<pageCount)
+        isMax=true;
+      _records.records.addAll(_record_gets.records);
+    }
     setState(() {
+      isLoadMore=false;
       isGetting=false;
     });
   }
@@ -209,6 +258,11 @@ class MemberPageState extends State<MemberPage> with  TickerProviderStateMixin{
         context,
         MaterialPageRoute(
             builder: (context) => new ListViewPage(RouterName: GlobleValue.OwnerSlvGetAPI,appTitle: record.title,Id:record.id+"&userId="+GlobleValue.userId.toString().toString(),detailType: DetailType.DetailPage,)));
+  }
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }
 class MySlideTransition extends AnimatedWidget {

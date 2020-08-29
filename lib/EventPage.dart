@@ -9,9 +9,7 @@ class EventPage extends StatelessWidget {
   final AppbarText;
   final ButtonText;
   Map<String, TextEditingController> text_list_control = Map();
-
   EventPage({this.AppbarText,this.ButtonText ,this.title, this.subtitle, this.feildItemList});
-
   Widget _buildListItem(BuildContext buildContext, FeildItem feildItem) {
     TextEditingController textEditingController = new TextEditingController();
     text_list_control[feildItem.fname] = textEditingController;
@@ -41,7 +39,6 @@ class EventPage extends StatelessWidget {
           ),
         ));
   }
-
   @override
   Widget build(BuildContext context) {
     final submitButton = Padding(

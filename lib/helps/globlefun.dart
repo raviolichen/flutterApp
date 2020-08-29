@@ -2,8 +2,11 @@ import 'package:device_info/device_info.dart';
 import 'package:encrypt/encrypt.dart' as _encypt;
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:zhushanApp/helps/CacheHelp.dart';
 import '../DataService.dart';
 import 'GlobleValue.dart';
+import 'SQLiteHelp.dart';
 String htmlformat(String data) {
   String newStrng = "";
   RegExp video = RegExp(r'<oembed url="(.*)"><\/oembed>');
@@ -64,7 +67,14 @@ String decryptdata(String token, String data) {
   }
 }
 
-
+Database db;
+CacheHelp cacheHelp;
+void initCache() async {
+  if(db==null)
+    db=await SQlitHelp.getdb(await getDatabasesPath());
+  if(cacheHelp==null)
+    cacheHelp=new CacheHelp(db);
+}
 
 bool isDiaglogShowing;
 void showLoading(BuildContext context) {

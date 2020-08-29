@@ -8,6 +8,7 @@ class DetailEventItem {
   String vId;
   String vtype;
   int votecount;
+  String LastEditDateTime;
 
   DetailEventItem({
     this.eventType,
@@ -18,7 +19,8 @@ class DetailEventItem {
     this.voteButtonText,
     this.vId,
     this.vtype,
-    this.votecount
+    this.votecount,
+    this.LastEditDateTime
   });
 
   factory DetailEventItem.fromJson(List<dynamic> json) {
@@ -32,6 +34,7 @@ class DetailEventItem {
       vId: json.first['vId'],
       vtype: json.first['vtype'],
         votecount:json.first['votecount'],
+      LastEditDateTime:json.first['LastEditDateTime'],
     );
   }
 }

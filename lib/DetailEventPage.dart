@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'CheckBoxListViewPage.dart';
 import 'helps/GlobleValue.dart';
+import 'modules/CacheDataModules.dart';
 import 'modules/EventItem.dart';
 import 'package:flutter/material.dart';
 import 'EventPage.dart';
@@ -39,10 +40,10 @@ class _DetailEventPageStatfulState extends State<DetailEventPagefix> {
   double _heights;
   WebView _webview;
   bool isGetting = false;
-
   @override
   void initState() {
     super.initState();
+    initCache();
     isLoad = false;
     _heights = 1.0;
     if (!isGetting) {
@@ -50,7 +51,6 @@ class _DetailEventPageStatfulState extends State<DetailEventPagefix> {
       new Future.delayed(const Duration(milliseconds: 250), () => _loaddetailjson());
     }
   }
-
   Future<void> _createWebView() async {
     _webview = new WebView(
       javascriptMode: JavascriptMode.unrestricted,
@@ -82,7 +82,6 @@ class _DetailEventPageStatfulState extends State<DetailEventPagefix> {
 
     });
   }
-
   Future<void> _loadhtml() async {
     await _listController.loadUrl(Uri.dataFromString(kNavigationExamplePage,
         mimeType: 'text/html', parameters: {'charset': 'utf-8'}).toString());
@@ -127,9 +126,22 @@ class _DetailEventPageStatfulState extends State<DetailEventPagefix> {
         ),
       );
     }
-
   void _loaddetailjson() async {
-    detailItem = await DetailEventDataService().loadDetail(eventItem.eId,GlobleValue.userId);
+    List<cache> data=(await cacheHelp.caches(eventItem.eId, "event"));
+    if(data!=null)
+      detailItem = await DetailEventDataService().loadDetail(eventItem.eId,GlobleValue.userId,data.first.LastEditDateTime);
+    else
+      detailItem = await DetailEventDataService().loadDetail(eventItem.eId,GlobleValue.userId,"");
+    if(detailItem.detail.compareTo("cache")==0){
+      detailItem.detail=data.first.data;
+    }
+    else{
+      if(data==null||data.length==0)
+        cacheHelp.insert(new cache(id: eventItem.eId,data: detailItem.detail,name: 'event',LastEditDateTime: detailItem.LastEditDateTime));
+        else{
+        cacheHelp.update(new cache(id: eventItem.eId,data: detailItem.detail,name: 'event',LastEditDateTime:detailItem.LastEditDateTime));
+      }
+    }
       kNavigationExamplePage=htmlformat(detailItem.detail);
     _createWebView();
   }

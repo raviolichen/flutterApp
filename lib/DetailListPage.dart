@@ -43,6 +43,7 @@ class _DetailListPageState extends State<DetailListPage> {
   @override
   void initState() {
     super.initState();
+    initCache();
     isLoad = false;
     _heights = 1.0;
     new Future.delayed(

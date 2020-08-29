@@ -3,6 +3,7 @@ class DetailListItem {
   String StoreWeb;
   String storeWebF;
   String stroeMapLocation;
+  String LastEditDateTime;
   List<String> potos;
   List<storeProduct> products;
   DetailListItem({
@@ -11,8 +12,8 @@ class DetailListItem {
     this .storeWebF,
     this. stroeMapLocation,
     this.potos,
-    this. products
-
+    this. products,
+    this.LastEditDateTime
   });
 
   factory DetailListItem.fromJson(List<dynamic> json) {
@@ -26,6 +27,7 @@ class DetailListItem {
       StoreWeb: json.first['StoreWeb'],
       storeWebF: json.first['storeWebF'],
       stroeMapLocation: json.first['stroeMapLocation'],
+      LastEditDateTime: json.first['LastEditDateTime'],
       potos:_potos,
       products: _products,
     );

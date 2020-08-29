@@ -10,7 +10,7 @@ import 'modules/TypeItemList.dart';
 import 'modules/detailEventitem.dart';
 import 'helps/GlobleValue.dart';
 import 'dart:convert' show  base64,utf8;
-
+import 'modules/CacheDataModules.dart';
 class RecordDataService {
   Future<String> _loadRecordsAsset(String Id, String RouterName) async {
     return await _Get(RouterName+"?Id="+Id);
@@ -114,12 +114,12 @@ class FeildItemDataService {
   }
 }
 class DetailEventDataService {
-  Future<String> _loadDetailAsset(int eId,int userId) async {
-    return await _Get(   GlobleValue.EventitemAPI + '?eId=' + eId.toString() + '&userId='+userId.toString());
+  Future<String> _loadDetailAsset(int eId,int userId,String LastEditDateTime) async {
+    return await _Get(GlobleValue.EventitemAPI + '?eId=' + eId.toString() + '&userId='+userId.toString()+'&LastEditDateTime='+base64.encode(utf8.encode(LastEditDateTime)));
   }
 
-  Future<DetailEventItem> loadDetail(int eId,int userId) async {
-    String jsonString = await _loadDetailAsset(eId,userId);
+  Future<DetailEventItem> loadDetail(int eId,int userId,String LastEditDateTime) async {
+    String jsonString = await _loadDetailAsset(eId,userId, LastEditDateTime);
     final jsonResponse = json.decode(jsonString);
     DetailEventItem detailItem = new DetailEventItem.fromJson(jsonResponse);
     return detailItem;
@@ -160,14 +160,30 @@ class TypePageDataService {
   }
 }
 class DetailListDataService {
-  Future<String> _loadDetailAsset(String Id) async {
-    return await _Get(GlobleValue.StoreDetailGetAPI+"?Id="+Id);
+  Future<String> _loadDetailAsset(String Id,String LastEditDateTime) async {
+    return await _Get(GlobleValue.StoreDetailGetAPI+"?Id="+Id+"&LastEditDateTime="+base64.encode(utf8.encode(LastEditDateTime)));
   }
 
   Future<DetailListItem> loadDetail(String Id) async {
-    String jsonString = await _loadDetailAsset(Id);
+    String jsonString="";
+    int _Id=int.parse(Id);
+    bool isCache=false;
+    List<cache> data=(await cacheHelp.caches(_Id, "store"));
+    jsonString = await _loadDetailAsset(Id,data!=null&&data.length>0?data.first.LastEditDateTime:"");
+    if(jsonString.compareTo("cache")==0){
+      jsonString=data.first.data;
+      isCache=true;
+    }
     final jsonResponse = json.decode(jsonString);
     DetailListItem detailListItem = new DetailListItem.fromJson(jsonResponse);
+    if(!isCache){
+      if(data!=null&&data.length>0){
+        cacheHelp.update(new cache(id: _Id,data: jsonString,name: 'store',LastEditDateTime:detailListItem.LastEditDateTime));
+      }
+      else{
+        cacheHelp.insert(new cache(id: _Id,data: jsonString,name: 'store',LastEditDateTime: detailListItem.LastEditDateTime));
+      }
+    }
     return detailListItem;
   }
 }

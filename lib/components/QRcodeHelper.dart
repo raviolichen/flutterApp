@@ -75,7 +75,7 @@ class QRcodeHelper {
       showLoading(context);
       try {
         Map<String, dynamic> data = await QRcodeDataService().postQrcodeValue(
-            GlobleValue.userId, GlobleValue.token, scanResult.rawContent, null);
+            GlobleValue.userId, GlobleValue.token, scanResult.rawContent, decodeResult);
         if (isDiaglogShowing) Navigator.pop(context);
         QRcodeResult(data, decodeResult);
       }

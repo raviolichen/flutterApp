@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:zhushanApp/components/QRcodeHelper.dart';
 import 'package:zhushanApp/helps/GlobleValue.dart';
 import 'package:flutter/material.dart';
+import 'package:zhushanApp/helps/SQLiteHelp.dart';
 import 'MemberPage.dart';
 import 'helps/globlefun.dart';
 import 'helps/helps.dart';
@@ -11,12 +13,11 @@ import 'HomePage.dart';
 import 'TypePage.dart';
 import 'package:synchronized/synchronized.dart';
 
+
 void main() {
   runApp(MyApp());
 }
-
 final routes = <String, WidgetBuilder>{};
-
 class MyApp extends StatelessWidget {
   final GlobalKey _widgetKey = GlobalKey();
   @override
@@ -56,8 +57,6 @@ class ViewTemplateStates extends State<ViewTemplate>
   static TypePage _typePage;
   static List<Widget> _widgetOptions ;
     //HomePage(),
-
-
   void _onItemTapped(int index) {
     setState(() {
       if (index == 2) {
@@ -231,7 +230,6 @@ class ViewTemplateStates extends State<ViewTemplate>
           );
     return screen;
   }
-
   Future<void> _getId(BuildContext context) async {
     Object data = await getId(context,false);
     setState(() {

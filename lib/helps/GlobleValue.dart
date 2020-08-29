@@ -28,7 +28,6 @@ class GlobleValue extends InheritedWidget {
   static const GetVoteList = ServerIp + "eventitem/GetVoteList";
   static const PostVoteList = ServerIp + "eventitem/PostVoteData";
 
-
   @override
   bool updateShouldNotify(GlobleValue old) {
     return old.key != key;
