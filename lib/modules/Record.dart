@@ -1,3 +1,5 @@
+import 'package:zhushanApp/modules/CacheDataModules.dart';
+
 class Record {
   String id;
   String title;
@@ -16,13 +18,18 @@ class Record {
   });
 
   factory Record.fromJson(Map<String, dynamic> json){
-    return new Record(
-        id: json['id'],
-        title: json['title'],
-        subtext: json['subtext'],
-        data: json ['data'],
-        photo: json['photo'],
-        url: json['url']
-    );
+    try{
+      return new Record(
+          id: json['id'],
+          title: json['title'],
+          subtext: json['subtext'],
+          data: json ['data'],
+          photo: json['photo'],
+          url: json['url']
+      );
+    }
+    catch(ex){
+      return null;
+    }
   }
 }
