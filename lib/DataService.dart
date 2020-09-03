@@ -18,7 +18,7 @@ class RecordDataService {
   Future<RecordList> loadRecords(String Id, String RouterName) async {
     String cacheName=null;
     if(RouterName.compareTo(GlobleValue.StoreListGetAPI)==0)
-      cacheName="StoreList";
+      cacheName="StoreList?TypeId="+Id;
     List<cache> data=null;
     bool isCache=false;
     if(cacheName!=null) {

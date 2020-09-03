@@ -128,7 +128,7 @@ class _DetailEventPageStatfulState extends State<DetailEventPagefix> {
     }
   void _loaddetailjson() async {
     List<cache> data=(await cacheHelp.caches(eventItem.eId, "event"));
-    if(data!=null)
+    if(data!=null&&data.length>0)
       detailItem = await DetailEventDataService().loadDetail(eventItem.eId,GlobleValue.userId,data.first.LastEditDateTime);
     else
       detailItem = await DetailEventDataService().loadDetail(eventItem.eId,GlobleValue.userId,"");

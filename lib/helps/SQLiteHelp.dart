@@ -7,7 +7,7 @@ class SQlitHelp{
         onCreate: (Database db, int version) async {
           // When creating the db, create the table
           await db.execute(
-              "CREATE TABLE cache(id INTEGER ,name TEXY, data TEXT, LastEditDateTime TEXT )");
+              "CREATE TABLE cache(id INTEGER ,name TEXT, data TEXT, LastEditDateTime TEXT )");
         });
   }
   static Future<Database> getdb(String path)async{
